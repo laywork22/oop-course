@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ProvaPackage">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ProvaPackage/dist/ProvaPackage.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

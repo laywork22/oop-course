@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GestioneMagazzino/GestioneMagazzino.iml" filepath="$PROJECT_DIR$/GestioneMagazzino/GestioneMagazzino.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NetBeansProjects.iml" filepath="$PROJECT_DIR$/.idea/NetBeansProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProvaPackage/ProvaPackage.iml" filepath="$PROJECT_DIR$/ProvaPackage/ProvaPackage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gestioneunisa/gestioneunisa.iml" filepath="$PROJECT_DIR$/gestioneunisa/gestioneunisa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gestioneveicoli/gestioneveicoli.iml" filepath="$PROJECT_DIR$/gestioneveicoli/gestioneveicoli.iml" />
+    </modules>
+  </component>
+</project>
