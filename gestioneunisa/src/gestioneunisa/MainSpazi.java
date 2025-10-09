@@ -92,6 +92,8 @@ public class MainSpazi {
         Accessibile ae = a;
         
         System.out.println(a);
+
+        //ciao
          
     }
     
