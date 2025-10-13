@@ -53,4 +53,26 @@ public class Persona {
     public String toString(){
         return "Nome: " + nome + "\nCognome: " + cognome + "\nCodice Fiscale: " + codiceFiscale;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        // si verificano prima i casi degeneri
+        if (obj == null) return false;
+
+        if (this == obj) return true;
+
+        //si verifica che siano della stessa classe
+        //alternativa Object.equals(this,obj)
+        if (this.getClass() != obj.getClass()) return false;
+
+        Persona p = (Persona) obj;
+
+        /* siamo all'interno della classe quindi è possibile accedere agli attributi privati di p */
+        return this.codiceFiscale == p.codiceFiscale;
+    }
+
+    @Override
+    public Persona clona(){
+        return new Persona(nome,cognome,codiceFiscale);
+    }
 }
