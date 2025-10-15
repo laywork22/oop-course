@@ -9,7 +9,7 @@ package it.unisa.diem.oop.persone;
  *
  * @author Flytr
  */
-public class Persona {
+public class Persona implements  Clonabile<Persona>, Comparable<Persona>{
     private String nome;
     private String cognome;
     private String codiceFiscale;
@@ -75,4 +75,14 @@ public class Persona {
     public Persona clona(){
         return new Persona(nome,cognome,codiceFiscale);
     }
+
+    @Override
+    public int hashCode(){
+        int code = (codiceFiscale == null) ? 0 : codiceFiscale.hashCode();
+
+        return code;
+    }
+
+    @Override
+    public int compareTo(Persona p) { return this.codiceFiscale.compareTo(p.codiceFiscale); }
 }

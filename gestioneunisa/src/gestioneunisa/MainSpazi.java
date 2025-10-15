@@ -30,7 +30,10 @@ public class MainSpazi {
         Docente d = new Docente("Enrico", "Bianchi", "EB0001", "325600", "ASD");
          
         PersonaUnisa pu = s; //si può comunque usare una classe astratta come tipo
-        
+
+        //override presuppone che il tipo dei parametri della superclasse
+        //in caso contrario si parla di overload
+
         
         Aula a = new Aula("A",3);
 
