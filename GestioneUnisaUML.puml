@@ -1,0 +1,115 @@
+@startuml
+class it.unisa.diem.oop.persone.VotoNonConsentitoException {
+}
+class it.unisa.diem.oop.persone.StudenteErasmus {
++ String getRuolo()
++ float getVotoMedio()
++ String toString()
+}
+
+interface it.unisa.diem.oop.persone.Clonabile {
+~ T clona()
+}
+
+class it.unisa.diem.oop.persone.Studente {
+- float votoMedio
++ float getVotoMedio()
++ String getRuolo()
++ String toString()
+}
+
+
+abstract class it.unisa.diem.oop.persone.PersonaUnisa {
+~ String matricola
++ String getMatricola()
++ void setMatricola(String)
++ String toString()
++ {abstract}String getRuolo()
+}
+
+
+class it.unisa.diem.oop.eccezioni.AccessibileException {
+}
+class gestioneunisa.Main {
++ {static} void main(String[])
+}
+
+class gestioneunisa.MainCollections {
++ {static} void main(String[])
+}
+
+class it.unisa.diem.oop.eccezioni.AccessibilePienoException {
+}
+class it.unisa.diem.oop.spazi.Aula {
+- Persona[] persone
+- int riemp
++ boolean isPieno()
++ boolean isVuoto()
++ String getTipo()
++ void entra(Persona)
++ Persona esce()
++ String toString()
+}
+
+
+class it.unisa.diem.oop.eccezioni.AccessibileVuotoException {
+}
+interface it.unisa.diem.oop.spazi.Accessibile {
+~ void entra(Persona)
+~ Persona esce()
+}
+
+class it.unisa.diem.oop.persone.Docente {
++ String insegnamento
++ String getInsegnamento()
++ String getRuolo()
++ String toString()
+}
+
+
+class it.unisa.diem.oop.persone.Persona {
+- String nome
+- String cognome
+- String codiceFiscale
++ String getNome()
++ void setNome(String)
++ String getCognome()
++ void setCognome(String)
++ String getCodiceFiscale()
++ void setCodiceFiscale(String)
++ String toString()
++ boolean equals(Object)
++ Persona clona()
+}
+
+
+abstract class it.unisa.diem.oop.spazi.Spazio {
+- String nome
+- int maxPosti
++ int getMaxPosti()
++ String getNome()
++ {abstract}boolean isPieno()
++ {abstract}boolean isVuoto()
++ {abstract}String getTipo()
++ String toString()
+}
+
+
+class gestioneunisa.MainSpazi {
++ {static} void main(String[])
+}
+
+
+
+it.unisa.diem.oop.persone.RuntimeException <|-- it.unisa.diem.oop.persone.VotoNonConsentitoException
+it.unisa.diem.oop.persone.Studente <|-- it.unisa.diem.oop.persone.StudenteErasmus
+it.unisa.diem.oop.persone.PersonaUnisa <|-- it.unisa.diem.oop.persone.Studente
+it.unisa.diem.oop.persone.Persona <|-- it.unisa.diem.oop.persone.PersonaUnisa
+it.unisa.diem.oop.eccezioni.Exception <|-- it.unisa.diem.oop.eccezioni.AccessibileException
+it.unisa.diem.oop.eccezioni.AccessibileException <|-- it.unisa.diem.oop.eccezioni.AccessibilePienoException
+it.unisa.diem.oop.spazi.Spazio <|-- it.unisa.diem.oop.spazi.Aula
+it.unisa.diem.oop.eccezioni.AccessibileException <|-- it.unisa.diem.oop.eccezioni.AccessibileVuotoException
+it.unisa.diem.oop.persone.PersonaUnisa <|-- it.unisa.diem.oop.persone.Docente
+it.unisa.diem.oop.persone.Clonabile <|.. it.unisa.diem.oop.persone.Persona
+it.unisa.diem.oop.spazi.Accessibile <|.. it.unisa.diem.oop.spazi.Spazio
+@enduml
