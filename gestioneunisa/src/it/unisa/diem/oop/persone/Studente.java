@@ -18,7 +18,7 @@ public class Studente extends PersonaUnisa{
         
         if(votoMedio < 18 || votoMedio > 31){
             //non presuppone una gestione dell'oggetto
-            throw new RuntimeException("Voto non consentito.");
+            throw new VotoNonConsentitoException("Voto non consentito.");
         }
         
         this.votoMedio = votoMedio;
