@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneConnessioneDiRete2/GestioneConnessioneDiRete2.iml" filepath="$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneConnessioneDiRete2/GestioneConnessioneDiRete2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneConnessioniDiRete/GestioneConnessioniDiRete.iml" filepath="$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneConnessioniDiRete/GestioneConnessioniDiRete.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneDevice/GestioneDevice.iml" filepath="$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneDevice/GestioneDevice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneDispositiviIoT/GestioneDispositiviIoT.iml" filepath="$PROJECT_DIR$/Esercizi_prova_intercorso/GestioneDispositiviIoT/GestioneDispositiviIoT.iml" />
       <module fileurl="file://$PROJECT_DIR$/GestioneMagazzino/GestioneMagazzino.iml" filepath="$PROJECT_DIR$/GestioneMagazzino/GestioneMagazzino.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/NetBeansProjects.iml" filepath="$PROJECT_DIR$/.idea/NetBeansProjects.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProvaPackage/ProvaPackage.iml" filepath="$PROJECT_DIR$/ProvaPackage/ProvaPackage.iml" />
