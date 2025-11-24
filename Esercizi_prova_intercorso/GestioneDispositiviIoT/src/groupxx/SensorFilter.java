@@ -12,7 +12,7 @@ import groupxx.Sensor;
  * @author lucagreco
  */
 public interface SensorFilter {
-    
+
     boolean checkSensor(Sensor s);
-    
+
 }

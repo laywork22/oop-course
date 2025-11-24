@@ -29,6 +29,25 @@ public class Studente extends PersonaUnisa{
     }
     
     @Override
+    public boolean equals(Object o){
+        
+        if (this == o) return true;
+        
+        if (o == null) return false;
+        
+        if (this.getClass() != o.getClass()) return false;
+        
+        Studente s = (Studente) o;
+        
+        return this.getMatricola().equals(s.getMatricola());
+    }
+    
+    @Override
+    public int hashCode(){
+        return this.getMatricola().hashCode();
+    }
+    
+    @Override
     public String getRuolo(){
         return "Studente";
     }

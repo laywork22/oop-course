@@ -21,9 +21,7 @@ public class MainSpazi {
      */
     //se nessuno gestisce le eccezioni obbligatorie e si arriva alla fine della gerarchia allora l'eccezione controllata può essere assimilata
     //a una non controllata e si ferma il programma
-    public static void main(String[] args) /*throws AccessibilePienoException*/ {
-        // TODO code application logic here
-        
+    public static void main(String[] args) /*throws AccessibilePienoException*/ {        
         Persona p = new Persona("Mario", "Rossi","MRS0001");
         Studente s = new Studente("Ernesto", "Grigi", "ERG0001","061270002",28.5F);
         StudenteErasmus se = new StudenteErasmus("Andrew","James","ANJ0001","061270005",27.0F);

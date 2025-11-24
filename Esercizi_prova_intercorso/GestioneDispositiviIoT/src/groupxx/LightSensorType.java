@@ -10,7 +10,7 @@ package groupxx;
  * @author lucagreco
  */
 public enum LightSensorType {
-    
-    AMBIENT,IR,COLOR
-    
+
+    AMBIENT, IR, COLOR
+
 }

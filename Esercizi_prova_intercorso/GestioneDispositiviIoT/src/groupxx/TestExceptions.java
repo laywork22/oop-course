@@ -12,6 +12,7 @@ import groupxx.SensorKit;
 import groupxx.TemperatureSensor;
 import groupxx.provided.SensorOutputType;
 import groupxx.provided.Range;
+
 import java.time.LocalDate;
 
 /**
@@ -25,12 +26,12 @@ public class TestExceptions {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        
-        Sensor a1 = new Accelerometer("ADXL371", "Analog Devices", 7.63, new Range(1.1,3.6), SensorOutputType.I2C, LocalDate.of(2022, 3, 22), 200.0, 3, 3.2 );
-        Sensor a2 = new Accelerometer("ADS16209", "Analog Devices", 42.20, new Range(3.0,3.6), SensorOutputType.SPI, LocalDate.of(2022, 4, 25), 180.0, 3, 0.05 );
-        Sensor a3 = new Accelerometer("ADXL206", "Analog Devices", 575.29, new Range(4.75,5.25), SensorOutputType.ANALOG, LocalDate.of(2022, 1, 13), 5, 2, 0.4 );
-        
+
+
+        Sensor a1 = new Accelerometer("ADXL371", "Analog Devices", 7.63, new Range(1.1, 3.6), SensorOutputType.I2C, LocalDate.of(2022, 3, 22), 200.0, 3, 3.2);
+        Sensor a2 = new Accelerometer("ADS16209", "Analog Devices", 42.20, new Range(3.0, 3.6), SensorOutputType.SPI, LocalDate.of(2022, 4, 25), 180.0, 3, 0.05);
+        Sensor a3 = new Accelerometer("ADXL206", "Analog Devices", 575.29, new Range(4.75, 5.25), SensorOutputType.ANALOG, LocalDate.of(2022, 1, 13), 5, 2, 0.4);
+
         SensorKit ssc = new SensorKit("Sensor Shopping Cart");
 
         try {
@@ -54,5 +55,5 @@ public class TestExceptions {
         }
 
     }
-    
+
 }

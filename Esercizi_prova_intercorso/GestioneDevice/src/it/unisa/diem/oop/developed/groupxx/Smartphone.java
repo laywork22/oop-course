@@ -1,7 +1,7 @@
 package it.unisa.diem.oop.developed.groupxx;
 
 import it.unisa.diem.oop.provided.MobileCPUType;
-import javafx.beans.binding.StringBinding;
+//import javafx.beans.binding.StringBinding;
 
 import java.time.LocalDate;
 
@@ -26,7 +26,7 @@ public class Smartphone extends Device{
 
     @Override
     public String toString(){
-        StringBuffer bf = new StringBuffer("\nSmartphone\n");
+        StringBuffer bf = new StringBuffer("\nSmartphone");
         bf.append(super.toString());
         bf.append("\nCPU= ").append(cpu.toString());
         bf.append("\nscreenSizeInch= ").append(screenSizeInch);

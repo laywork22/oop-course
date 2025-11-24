@@ -10,24 +10,24 @@ package groupxx;
  * @author lucagreco
  */
 public class Range<T extends Number & Comparable> {
-    
+
     private final T low;
     private final T high;
 
     public Range(T low, T high) {
-        
-        if (low.compareTo(high)>=0) throw new IllegalArgumentException("Bad range initialization.");
-        
+
+        if (low.compareTo(high) >= 0) throw new IllegalArgumentException("Bad range initialization.");
+
         this.low = low;
         this.high = high;
-        
-        
+
+
     }
-    
+
     public boolean contains(T number) {
 
-        return (number.compareTo(low)>=0 && number.compareTo(high)<=0);
-  
+        return (number.compareTo(low) >= 0 && number.compareTo(high) <= 0);
+
     }
 
     public T getLow() {
@@ -42,8 +42,6 @@ public class Range<T extends Number & Comparable> {
     public String toString() {
         return low + " ~ " + high;
     }
-    
-    
-    
-    
+
+
 }

@@ -105,6 +105,17 @@ public class Prodotto {
     public int stampaInfo(int c){
         return 1; 
     }
+
+    @Override
+    public String toString() {
+        return "Prodotto{" +
+                "codice=" + codice +
+                ", descrizione='" + descrizione + '\'' +
+                ", cost=" + cost +
+                ", dataProduzione='" + dataProduzione + '\'' +
+                '}';
+    }
+
     //metodi setter e getter->metodi di accesso e seguono una convenzione per i nomi
     
     //impostare il codice 

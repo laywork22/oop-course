@@ -3,16 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/spazi/Aula.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/Persona.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/spazi/Spazio.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/StudenteErasmus.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/gestioneunisa/MainSpazi.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/spazi/Accessibile.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/gestioneunisa/Main.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/VotoNonConsentitoException.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/PersonaUnisa.java</file>
-            <file>file:/C:/Users/Flytr/Documents/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/Studente.java</file>
+            <file>file:/home/laywork/Desktop/Uni/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/report/AnagraficaStudenti.java</file>
+            <file>file:/home/laywork/Desktop/Uni/NetBeansProjects/gestioneunisa/src/gestioneunisa/MainReport.java</file>
+            <file>file:/home/laywork/Desktop/Uni/NetBeansProjects/gestioneunisa/src/it/unisa/diem/oop/persone/Persona.java</file>
         </group>
     </open-files>
 </project-private>

@@ -2,15 +2,15 @@ package groupxx;
 
 import java.time.LocalDate;
 
-public abstract class Sensor implements Comparable<Sensor>{
+public abstract class Sensor implements Comparable<Sensor> {
     private final String partNumber;
     private final String manufacturer;
-    private double price;
-    private Range<Double>  vs;
+    private final double price;
+    private Range<Double> vs;
     private final SensorOutputType sot;
     private final LocalDate manifacturingDate;
 
-    public Sensor(String partNumber, String manufacturer, double price, Range<Double> vs, SensorOutputType sot, LocalDate manifacturingDate ){
+    public Sensor(String partNumber, String manufacturer, double price, Range<Double> vs, SensorOutputType sot, LocalDate manifacturingDate) {
         this.partNumber = partNumber;
         this.manufacturer = manufacturer;
         this.price = price;
@@ -20,10 +20,10 @@ public abstract class Sensor implements Comparable<Sensor>{
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == null || !this.getClass().equals(other.getClass())) return false;
 
-        if(this == other) return true;
+        if (this == other) return true;
 
         Sensor s = (Sensor) other;
 
@@ -31,12 +31,12 @@ public abstract class Sensor implements Comparable<Sensor>{
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return (this.getPartNumber() == null) ? -1 : this.getPartNumber().hashCode();
     }
 
     @Override
-    public int compareTo(Sensor o){
+    public int compareTo(Sensor o) {
         return this.getPartNumber().compareToIgnoreCase(o.getPartNumber());
     }
 
@@ -59,7 +59,7 @@ public abstract class Sensor implements Comparable<Sensor>{
     public abstract boolean hasValidPartNumber();
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuffer bf = new StringBuffer();
 
         bf.append("Part Number= ").append(partNumber).append("\n");

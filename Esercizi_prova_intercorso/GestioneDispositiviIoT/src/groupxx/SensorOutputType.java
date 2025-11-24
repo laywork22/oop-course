@@ -10,7 +10,7 @@ package groupxx;
  * @author lucagreco
  */
 public enum SensorOutputType {
-    
-    ANALOG,DIGITAL,I2C,SPI,PWM
-    
+
+    ANALOG, DIGITAL, I2C, SPI, PWM
+
 }

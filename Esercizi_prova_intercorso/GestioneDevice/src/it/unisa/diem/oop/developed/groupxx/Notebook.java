@@ -4,7 +4,7 @@ import it.unisa.diem.oop.provided.*;
 public class Notebook extends Device{
     private final CPUType type;
     private final NBScreenType screenType;
-    private boolean touchScreen;
+    private final boolean touchScreen;
 
     //costruttore per i Notebook
     public Notebook(CPUType type, NBScreenType screenType, boolean touchScreen,String serialNumber, int year, int month, int dayOfMonth, int ramSize, int storageCapacity) {
@@ -35,7 +35,7 @@ public class Notebook extends Device{
 
     @Override
     public String toString(){
-        StringBuffer bf = new StringBuffer("\nNotebook\n");
+        StringBuffer bf = new StringBuffer("\nNotebook");
 
         bf.append(super.toString());
         bf.append("\nCPU=").append(type.toString());

@@ -13,7 +13,6 @@ Tecnico
 package gestioneunisa;
 
 import it.unisa.diem.oop.persone.*;
-
 import java.util.*;
 //import it.unisa.diem.oop.persone.*; --> se voglio importare tutto il package
 
@@ -26,9 +25,7 @@ public class MainCollections {
     /**non l hai visto negro   godo se muore luffy   ichigo neg diff luffy
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
+    public static void main(String[] args) {        
         Persona p = new Persona("Maria", "Rossi","MRS0001");
 
         //Object p3 = p.clona();

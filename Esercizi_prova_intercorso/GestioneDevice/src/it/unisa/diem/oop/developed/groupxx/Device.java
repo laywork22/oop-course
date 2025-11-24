@@ -53,8 +53,8 @@ public abstract class Device implements Comparable<Device> {
         StringBuffer bf = new StringBuffer();
         bf.append("\nserialNumber= ").append(serialNumber);
         bf.append("\nreleaseDate= ").append(releaseDate.toString());
-        bf.append("\nRAMsize= ").append(ramSize);
-        bf.append("\nstorageCapacity= ").append(storageCapacity);
+        bf.append("\nRAMsize= ").append(ramSize).append(" GB");
+        bf.append("\nstorageCapacity= ").append(storageCapacity).append(" GB");
 
         return bf.toString();
 

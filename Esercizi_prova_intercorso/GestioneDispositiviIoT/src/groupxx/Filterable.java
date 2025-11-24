@@ -7,6 +7,7 @@ package groupxx;
 
 import groupxx.Sensor;
 import groupxx.SensorKit;
+
 import java.util.Comparator;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Comparator;
  * @author lucagreco
  */
 public interface Filterable {
-    
+
     SensorKit filter(SensorFilter sf, Comparator<Sensor> c);
-    
+
 }

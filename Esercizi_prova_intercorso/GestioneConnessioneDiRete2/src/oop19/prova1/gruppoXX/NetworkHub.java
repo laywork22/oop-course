@@ -22,6 +22,7 @@ public class NetworkHub implements NetworkInterface{
     public void accept(NetworkInterface sourceInterface, int sourceAddress, int destAddress, String message) {
         Iterator<NetworkInterface> i = interfaceSet.iterator();
 
+        i.
         System.out.printf("Hub %s: da %d via %s per %d: %s\n", this.toString(), sourceAddress, sourceInterface.toString(),destAddress,message);
         //System.out.printf("Hub %s: da %d via %s per %d: %s\n", id, destAddress, sourceInterface.toString(),sourceAddress,message);
         while(i.hasNext()){
