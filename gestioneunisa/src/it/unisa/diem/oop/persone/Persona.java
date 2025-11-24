@@ -5,11 +5,13 @@
  */
 package it.unisa.diem.oop.persone;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Flytr
  */
-public class Persona implements  Clonabile<Persona>, Comparable<Persona>{
+public class Persona implements  Clonabile<Persona>, Comparable<Persona>, Serializable{
     private String nome;
     private String cognome;
     private String codiceFiscale;
