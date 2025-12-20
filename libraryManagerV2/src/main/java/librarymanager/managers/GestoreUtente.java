@@ -1,6 +1,6 @@
 package librarymanager.managers;
 
-import librarymanager.controllers.exceptions.UtenteException;
+import librarymanager.exceptions.UtenteException;
 import librarymanager.models.StatoUtente;
 import librarymanager.models.Utente;
 import librarymanager.validators.modelvalidator.UtenteValidator;

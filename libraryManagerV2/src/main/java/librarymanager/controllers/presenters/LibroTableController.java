@@ -1,4 +1,4 @@
-package librarymanager.controllers;
+package librarymanager.controllers.presenters;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -102,6 +102,12 @@ public class LibroTableController implements AreaPresenter {
         }
     }
 
+    @Override
+    public void ricarica() {
+        aggiornaTabella();
+        tabellaLibri.refresh();
+    }
+
     private void apriForm(Libro libroDaModificare) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarymanager/LibroView.fxml"));
@@ -162,6 +168,8 @@ public class LibroTableController implements AreaPresenter {
             }
         }
     }
+
+
 
     @Override
     public List<String> getCriteriOrdinamento() {

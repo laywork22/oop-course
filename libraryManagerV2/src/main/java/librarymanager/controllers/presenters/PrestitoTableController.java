@@ -1,4 +1,4 @@
-package librarymanager.controllers;
+package librarymanager.controllers.presenters;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -18,16 +18,12 @@ import javafx.stage.Stage;
 import librarymanager.controllers.alert.DialogService;
 import librarymanager.controllers.alert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormPrestitoController;
-import librarymanager.controllers.forms.FormUtenteController;
 import librarymanager.managers.GestoreLibro;
 import librarymanager.managers.GestorePrestito;
 import librarymanager.managers.GestoreUtente;
-import librarymanager.models.Libro;
 import librarymanager.models.Prestito;
 import librarymanager.models.StatoPrestito;
-import librarymanager.models.Utente;
 
-import java.awt.geom.Area;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
@@ -94,6 +90,8 @@ public class PrestitoTableController implements AreaPresenter {
         idClm.setMaxWidth(100);
         nomeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUtente().getNome()));
         cognomeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUtente().getCognome()));
+        matricolaClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getUtente().getMatricola()));
+        isbnClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getLibro().getIsbn()));
         titoloClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getLibro().getTitolo()));
         autoreClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getLibro().getAutori()));
         dataInizioClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getDataInizio()));
@@ -197,6 +195,12 @@ public class PrestitoTableController implements AreaPresenter {
         else {
             ds.mostraErrore("Seleziona un prestito da modificare");
         }
+    }
+
+    @Override
+    public void ricarica() {
+        aggiornaTabella();
+        prestitoTable.refresh();
     }
 
     @Override

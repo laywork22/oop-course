@@ -1,6 +1,6 @@
 package librarymanager.managers;
 
-import librarymanager.controllers.exceptions.LibroException;
+import librarymanager.exceptions.LibroException;
 import librarymanager.models.Libro;
 import librarymanager.models.StatoLibro;
 import librarymanager.validators.modelvalidator.LibroValidator;

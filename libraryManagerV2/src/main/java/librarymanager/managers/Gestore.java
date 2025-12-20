@@ -1,8 +1,8 @@
 package librarymanager.managers;
 
-import librarymanager.controllers.exceptions.LibroException;
-import librarymanager.controllers.exceptions.PrestitoException;
-import librarymanager.controllers.exceptions.UtenteException;
+import librarymanager.exceptions.LibroException;
+import librarymanager.exceptions.PrestitoException;
+import librarymanager.exceptions.UtenteException;
 
 import java.util.List;
 import java.util.Map;

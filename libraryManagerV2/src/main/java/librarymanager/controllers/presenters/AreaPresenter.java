@@ -1,4 +1,4 @@
-package librarymanager.controllers;
+package librarymanager.controllers.presenters;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ public interface AreaPresenter {
     void onRimuovi();
 
     void onModifica();
+
+    void ricarica();
 
     List<String> getCriteriOrdinamento();
 

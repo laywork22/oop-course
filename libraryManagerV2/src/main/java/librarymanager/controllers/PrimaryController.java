@@ -14,6 +14,10 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import librarymanager.controllers.alert.DialogService;
 import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.controllers.presenters.AreaPresenter;
+import librarymanager.controllers.presenters.LibroTableController;
+import librarymanager.controllers.presenters.PrestitoTableController;
+import librarymanager.controllers.presenters.UtenteTableController;
 import librarymanager.managers.*;
 import librarymanager.models.ArchivioDati;
 import librarymanager.models.Libro;
@@ -22,10 +26,6 @@ import librarymanager.models.Utente;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class PrimaryController {
@@ -112,9 +112,13 @@ public class PrimaryController {
 
         gestorePrestito.aggiornaStati();
 
-        setAreaLibri(null);
+        setAreaPrestiti(null);
+
+        areaCorrente.ricarica();
 
     }
+
+
 
 
     @FXML
@@ -180,6 +184,7 @@ public class PrimaryController {
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
+        areaCorrente.ricarica();
         toggleMenu(actionEvent);
     }
 
@@ -191,6 +196,7 @@ public class PrimaryController {
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
+        areaCorrente.ricarica();
         toggleMenu(actionEvent);
     }
 
@@ -279,10 +285,15 @@ public class PrimaryController {
 
                 directoryCorrente = cartellaSelezionata;
 
+
             }
         } catch (Exception e) {
             ds.mostraErrore("Errore caricamento: "+ e.getMessage());
         }
+
+        areaCorrente.ricarica();
+
     }
+
 
 }

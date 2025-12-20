@@ -1,6 +1,6 @@
 package librarymanager.managers;
 
-import librarymanager.controllers.exceptions.PrestitoException;
+import librarymanager.exceptions.PrestitoException;
 import librarymanager.models.Prestito;
 import librarymanager.models.StatoLibro;
 import librarymanager.models.StatoPrestito;
@@ -55,12 +55,20 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
         Prestito p = cerca(id);
         if (p == null) return;
 
-        if (p.getStato() == StatoPrestito.ATTIVO || p.getStato() == StatoPrestito.SCADUTO) {
-            p.getUtente().setPrestitiAttivi(p.getUtente().getPrestitiAttivi() - 1);
-            p.getLibro().setCopieDisponibili(p.getLibro().getCopieDisponibili() + 1);
+        p.getUtente().setPrestitiAttivi(p.getUtente().getPrestitiAttivi() - 1);
+        p.getLibro().setCopieDisponibili(p.getLibro().getCopieDisponibili() + 1);
+        p.setDataFineEffettiva(LocalDate.now());
+
+
+        if (p.getStato() == StatoPrestito.ATTIVO  || p.getStato() == StatoPrestito.IN_SCADENZA) {
+            p.setStato(StatoPrestito.CHIUSO);
+        }
+        else if (LocalDate.now().isAfter(p.getDataFinePrestabilita())) {
+            p.setStato(StatoPrestito.CHIUSO_IN_RITARDO);
         }
 
-        mappaPrestiti.remove(id);
+
+        aggiornaStati();
     }
 
     public void chiudiPrestito(Integer idPrestito)  {
@@ -141,7 +149,7 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
             }
 
             if (p.getDataFinePrestabilita().isBefore(oggi)) {
-                p.setStato(StatoPrestito.SCADUTO);
+                p.setStato(StatoPrestito.CHIUSO_IN_RITARDO);
             } else {
                 p.setStato(StatoPrestito.ATTIVO);
             }

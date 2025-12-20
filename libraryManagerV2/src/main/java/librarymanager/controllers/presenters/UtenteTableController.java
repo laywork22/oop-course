@@ -1,8 +1,7 @@
-package librarymanager.controllers;
+package librarymanager.controllers.presenters;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,11 +19,9 @@ import librarymanager.controllers.alert.DialogService;
 import librarymanager.controllers.alert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormUtenteController;
 import librarymanager.managers.GestoreUtente;
-import librarymanager.models.Libro;
 import librarymanager.models.StatoUtente;
 import librarymanager.models.Utente;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.*;
 
@@ -173,6 +170,12 @@ public class UtenteTableController implements AreaPresenter{
         }
 
         aggiornaTabella();
+    }
+
+    @Override
+    public void ricarica() {
+        aggiornaTabella();
+        tabellaUtenti.refresh();
     }
 
     @Override

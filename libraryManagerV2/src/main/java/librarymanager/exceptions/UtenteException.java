@@ -1,4 +1,4 @@
-package librarymanager.controllers.exceptions;
+package librarymanager.exceptions;
 
 public class UtenteException extends Exception {
     public UtenteException(String message) {

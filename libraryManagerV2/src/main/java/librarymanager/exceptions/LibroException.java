@@ -1,4 +1,4 @@
-package librarymanager.controllers.exceptions;
+package librarymanager.exceptions;
 
 public class LibroException extends Exception {
     public LibroException(String message) {

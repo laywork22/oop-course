@@ -1,8 +1,9 @@
 package librarymanager.models;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Libro {
+public class Libro implements Comparable<Libro> {
     private String titolo;
     private String autori;
     private int anno;
@@ -101,5 +102,10 @@ public class Libro {
                 ", copieDisponibili=" + copieDisponibili +
                 ", stato=" + stato +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Libro o) {
+        return this.isbn.compareToIgnoreCase(o.getIsbn());
     }
 }

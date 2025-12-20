@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainContentUtenti" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@primarystyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.UtenteTableController">
+<AnchorPane fx:id="mainContentUtenti" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@primarystyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.presenters.UtenteTableController">
    <children>
       <TableView fx:id="tabellaUtenti" prefHeight="400.0" prefWidth="600.0" AnchorPane.topAnchor="0.0"
                  AnchorPane.bottomAnchor="0.0"
@@ -16,7 +16,7 @@
             <TableColumn fx:id="cognomeClm" prefWidth="118.0" text="Cognome" />
             <TableColumn fx:id="emailClm" prefWidth="68.0" text="Email" />
             <TableColumn fx:id="prestitAttiviClm" prefWidth="88.0" text="Prestiti attivi" />
-            <TableColumn fx:id="statoClm" prefWidth="180.0" text="Stato" />
+            <TableColumn fx:id="statoClm" prefWidth="150.0" text="Stato" />
         </columns>
       </TableView>
    </children>

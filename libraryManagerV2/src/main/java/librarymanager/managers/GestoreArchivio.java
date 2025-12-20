@@ -155,7 +155,7 @@ public class GestoreArchivio {
             while ((line = br.readLine()) != null) {
                 String campi[] = line.split(";");
 
-                Utente dummyUser = new Utente(campi[2], campi[3], campi[1],"boh");
+                Utente dummyUser = new Utente(campi[2], campi[3],"b.sere@studenti.unisa.it", campi[1]);
 
                 if (listaUtenti.contains(dummyUser)) {
                     int index = listaUtenti.indexOf(dummyUser);
@@ -181,7 +181,9 @@ public class GestoreArchivio {
                 Prestito p = new Prestito(dummyUser, dummyBook, LocalDate.parse(campi[8]));
 
                 p.setDataInizio(LocalDate.parse(campi[7]));
-                p.setDataFineEffettiva(LocalDate.parse(campi[9]));
+                if (campi[9] != null && !campi[9].isEmpty() && !campi[9].equals("null")) {
+                    p.setDataFineEffettiva(LocalDate.parse(campi[9]));
+                }
                 p.setStato(StatoPrestito.valueOf(campi[10]));
 
                 listaPrestiti.add(p);

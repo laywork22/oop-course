@@ -28,11 +28,26 @@ public class DialogServiceJavaFX implements DialogService {
         alert.setContentText(msg);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("/it/unisa/diem/softeng/librarymanager/alert.css").toExternalForm());
+        dialogPane.getStylesheets().add(getClass().getResource("/librarymanager/alert.css").toExternalForm());
+
+
+
+        dialogPane.getStyleClass().addAll("custom-alert");
+
+        alert.showAndWait();
+    }
+
+    @Override
+    public void mostraAvviso(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setContentText(msg);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/librarymanager/alert.css").toExternalForm());
 
         String cssAlertType = "warning";
 
-        dialogPane.getStyleClass().addAll("custom-alert",cssAlertType);
+        dialogPane.getStyleClass().addAll("custom-alert", cssAlertType);
 
         alert.showAndWait();
     }
@@ -43,7 +58,7 @@ public class DialogServiceJavaFX implements DialogService {
         alert.setContentText(msg);
 
         DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.getStylesheets().add(getClass().getResource("/it/unisa/diem/softeng/librarymanager/alert.css").toExternalForm());
+        dialogPane.getStylesheets().add(getClass().getResource("/librarymanager/alert.css").toExternalForm());
 
         String cssAlertType = "confirmation";
 

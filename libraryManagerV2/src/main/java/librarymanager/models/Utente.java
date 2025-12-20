@@ -2,7 +2,7 @@ package librarymanager.models;
 
 import java.util.Objects;
 
-public class Utente {
+public class Utente implements Comparable<Utente> {
     private String nome;
     private String cognome;
     private String email;
@@ -88,5 +88,10 @@ public class Utente {
                 ", matricola='" + matricola + '\'' +
                 ", stato=" + stato +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Utente o) {
+        return this.getMatricola().compareToIgnoreCase(o.getMatricola());
     }
 }

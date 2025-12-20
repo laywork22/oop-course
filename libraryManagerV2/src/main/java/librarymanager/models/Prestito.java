@@ -3,7 +3,7 @@ package librarymanager.models;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Prestito {
+public class Prestito implements Comparable<Prestito>{
     private static int nextId = 1;
 
     private int id;
@@ -20,6 +20,9 @@ public class Prestito {
         this.libro = libro;
         this.dataInizio = LocalDate.now();
         this.dataFinePrestabilita = dataFinePrestabilita;
+        this.stato = StatoPrestito.ATTIVO;
+
+        nextId++;
     }
 
     public int getId() {
@@ -100,5 +103,10 @@ public class Prestito {
                 ", dataFinePrestabilita=" + dataFinePrestabilita +
                 ", dataFineEffettiva=" + dataFineEffettiva +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Prestito o) {
+        return Integer.compare(this.id, o.getId());
     }
 }
