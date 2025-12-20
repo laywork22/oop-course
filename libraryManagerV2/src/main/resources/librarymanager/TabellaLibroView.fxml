@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainContentLibri" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@primarystyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.LibroTableController">
+   <children>
+      <TableView fx:id="tabellaLibri" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="isbnClm" prefWidth="93.0" text="ISBN" />
+          <TableColumn fx:id="TitoloClm" prefWidth="106.0" text="Titolo" />
+            <TableColumn fx:id="autoriClm" prefWidth="148.0" text="Autori" />
+            <TableColumn fx:id="annoClm" prefWidth="61.0" text="Anno" />
+            <TableColumn fx:id="copieTotaliClm" prefWidth="52.0" text="Copie Totali" />
+            <TableColumn fx:id="copieDisponibiliClm" prefWidth="66.0" text="Copie Disponibili" />
+            <TableColumn fx:id="statoClm" prefWidth="86.0" text="Stato" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

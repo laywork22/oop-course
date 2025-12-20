@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainContentPrestiti" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="734.0" stylesheets="@primarystyle.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.PrestitoTableController">
+   <children>
+      <TableView fx:id="prestitoTable" editable="true" AnchorPane.topAnchor="0.0"
+                 AnchorPane.bottomAnchor="0.0"
+                 AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" >
+        <columns>
+          <TableColumn fx:id="idClm" prefWidth="24.0" text="ID" />
+            <TableColumn prefWidth="54.0" text="Libro">
+               <columns>
+                <TableColumn fx:id="isbnClm" prefWidth="54.0" text="ISBN" />
+                  <TableColumn fx:id="titoloClm" prefWidth="62.0" text="Titolo" />
+                  <TableColumn fx:id="autoreClm" prefWidth="76.0" text="Autore" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="175.0" text="Utente">
+               <columns>
+                  <TableColumn fx:id="matricolaClm" prefWidth="82.0" text="Matricola" />
+                  <TableColumn fx:id="nomeClm" prefWidth="106.0" text="Nome" />
+                  <TableColumn fx:id="cognomeClm" minWidth="50.0" prefWidth="0.0" text="Cognome" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="dataInizioClm" minWidth="0.0" prefWidth="41.0" text="Data inizio" />
+            <TableColumn fx:id="dataScadenzaClm" minWidth="0.0" prefWidth="27.0" text="Data scadenza" />
+            <TableColumn fx:id="dataConsegnaClm" prefWidth="68.0" text="Data consegna" />
+            <TableColumn fx:id="statoClm" prefWidth="64.0" text="Stato" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -56,6 +56,14 @@ public abstract class Sensor implements Comparable<Sensor> {
         return sot;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public Range<Double> getVs() {
+        return vs;
+    }
+
     public abstract boolean hasValidPartNumber();
 
     @Override

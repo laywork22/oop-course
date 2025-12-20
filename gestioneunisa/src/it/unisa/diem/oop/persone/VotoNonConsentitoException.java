@@ -16,10 +16,8 @@ public class VotoNonConsentitoException extends RuntimeException{
      * Constructs an instance of <code>VotoNonConsentitoException</code> with
      * the specified detail message.
      *
-     * @param msg the detail message.
      */
-    public VotoNonConsentitoException(){
-    }
+    public VotoNonConsentitoException() {}
 
     public VotoNonConsentitoException(String msg) {
         super(msg);

@@ -1,0 +1,64 @@
+/* ROOT */
+.custom-alert {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+/* HEADER */
+.custom-alert .header-panel {
+    -fx-background-color: #0078D7;
+    -fx-padding: 12 16 12 16;
+}
+
+.custom-alert .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* CONTENT */
+.custom-alert .content.label {
+    -fx-padding: 16;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333;
+}
+
+/* BUTTON BAR */
+.custom-alert .button-bar {
+    -fx-padding: 10 16 10 16;
+    -fx-background-color: #F5F5F5;
+}
+
+/* BUTTONS */
+.custom-alert .button {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 6 18 6 18;
+}
+
+.custom-alert .button:hover {
+    -fx-background-color: #005FA3;
+}
+
+/* WARNING */
+.custom-alert.warning .header-panel {
+    -fx-background-color: #FFA500;
+}
+
+/* ERROR */
+.custom-alert.error .header-panel {
+    -fx-background-color: #D32F2F;
+}
+
+/* CONFIRM CANCEL BUTTON */
+.custom-alert .button.cancel-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0078D7;
+}
+
+.custom-alert .button.cancel-button:hover {
+    -fx-background-color: rgba(0,120,215,0.1);
+}

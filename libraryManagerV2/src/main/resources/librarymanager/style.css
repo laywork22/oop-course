@@ -1,0 +1,185 @@
+.form-label {
+    -fx-text-fill: #666666;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 0, 0, 0, 1);
+}
+
+
+.header-bar {
+    -fx-background-color: #0078D7;
+    -fx-padding: 15px 20px;
+    -fx-alignment: CENTER;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+
+.header-bar .label {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+
+.button-primary {
+    -fx-background-color: #0078D7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+
+    -fx-cursor: hand;
+    -fx-padding: 8px 24px;
+}
+
+.button-primary:hover {
+    -fx-background-color: #005a9e;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
+}
+
+.button-primary:pressed {
+    -fx-background-color: #004578;
+}
+
+.button-secondary {
+    -fx-background-color: #e1e1e1;
+    -fx-text-fill: #333333;
+    -fx-font-weight: normal;
+
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+
+    -fx-cursor: hand;
+    -fx-padding: 8px 24px;
+
+    -fx-border-color: #cccccc;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #d0d0d0;
+    -fx-border-color: #999999;
+}
+
+.button-secondary:pressed {
+    -fx-background-color: #cccccc;
+}
+
+
+.hamburger-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-cursor: hand;
+    -fx-padding: 0 10px;
+}
+
+.hamburger-button:hover {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 3px;
+}
+
+#sideMenu {
+    -fx-background-color: #005a9e;
+}
+
+#sideMenu .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER-LEFT;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 0;
+}
+
+#sideMenu .button:hover {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 4px;
+}
+
+#sideMenu .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px 15px;
+}
+.text-field:focused {
+    -fx-border-color: #0078D7;
+}
+
+
+.combo-box, .date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+
+    -fx-padding: 2px;
+}
+
+
+.combo-box .list-cell,
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-padding: 4px 8px;
+}
+
+.combo-box .arrow-button,
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0 10px;
+}
+
+.combo-box .arrow,
+.date-picker .arrow {
+    -fx-background-color: #555555;
+    -fx-background-insets: 0;
+    -fx-padding: 0.25em;
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z";
+}
+
+
+.combo-box:hover, .date-picker:hover {
+    -fx-border-color: #999999;
+}
+.combo-box:hover .arrow, .date-picker:hover .arrow {
+    -fx-background-color: #0078D7;
+}
+
+.combo-box:focused,
+.date-picker:focused,
+.date-picker:contains-focus {
+    -fx-border-color: #0078D7;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 120, 215, 0.3), 5, 0, 0, 0);
+}
+
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-padding: 4px 10px; /* Un po' di aria */
+}
+
+/* 2. Quando passi il mouse sopra o selezioni un elemento: Sfondo Blu e Testo Bianco */
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #0078D7; /* Il tuo blu primario */
+    -fx-text-fill: white;
+}

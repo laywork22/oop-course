@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.forms.FormUtenteController">
+      <Button fx:id="salvaBtn" layoutX="205.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleSalva" styleClass="button-primary" text="Salva" />
+      <Button fx:id="annullaBtn" layoutX="312.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleAnnulla" prefHeight="24.0" prefWidth="91.0" styleClass="button-secondary" text="Annulla" />
+      <Label layoutX="96.0" layoutY="246.0" styleClass="form-label" text="Email" />
+      <Label layoutX="85.0" layoutY="193.0" styleClass="form-label" text="Matricola" />
+      <Label layoutX="85.0" layoutY="147.0" styleClass="form-label" text="Cognome" />
+      <Label layoutX="94.0" layoutY="97.0" styleClass="form-label" text="Nome" />
+      <TextField fx:id="nomeFld" layoutX="192.0" layoutY="90.0" prefHeight="29.0" prefWidth="308.0" />
+      <TextField fx:id="cognomeFld" layoutX="189.0" layoutY="140.0" prefHeight="29.0" prefWidth="301.0" />
+      <TextField fx:id="matricolaFld" layoutX="189.0" layoutY="186.0" prefHeight="29.0" prefWidth="187.0" />
+      <TextField fx:id="emailFld" layoutX="189.0" layoutY="239.0" prefHeight="26.0" prefWidth="285.0" />
+   <HBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" styleClass="header-bar">
+      <children>
+            <Label fx:id="insModLbl" alignment="CENTER" contentDisplay="CENTER" text="Inserimento utente">
+               <font>
+                  <Font size="20.0" />
+               </font>
+         </Label>
+      </children>
+   </HBox>
+   <Label fx:id="pAttiviLbl" layoutX="77.0" layoutY="294.0" prefHeight="14.0" prefWidth="67.0" styleClass="form-label" text="Prestiti attivi" />
+   <TextField fx:id="pAttiviFld" layoutX="189.0" layoutY="286.0" prefHeight="29.0" prefWidth="187.0" />
+</AnchorPane>

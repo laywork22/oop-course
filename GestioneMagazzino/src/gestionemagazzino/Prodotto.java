@@ -38,7 +38,7 @@ public class Prodotto {
         //numProdotti = 0;
     }
     
-    /*inizializzatore di istanza -> si mette del codice che dovrà essere 
+    /*Inizializzatore di istanza -> si mette del codice che dovrà essere
     inizializzato da tutti i costruttori alternativi */
     /*Il costruttore chiamerà sempre l'inizializzatore per primo. Possiamo usarlo per definire
     le azioni che tutti i costruttori dovranno eseguire*/

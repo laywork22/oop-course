@@ -14,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -22,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -96,6 +96,9 @@ public class MyStudentListViewController implements Initializable {
 
     @FXML
     private void saveFile(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+       
+        
     }
 
     @FXML
@@ -115,6 +118,7 @@ public class MyStudentListViewController implements Initializable {
 
     @FXML
     private void updateCode(TableColumn.CellEditEvent<Studente, String> event) {
+
     }
     
 }
