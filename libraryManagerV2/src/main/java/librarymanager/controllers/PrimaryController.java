@@ -137,6 +137,7 @@ public class PrimaryController {
             salvaFileConNome(actionEvent);
         }
 
+        toggleMenu(actionEvent);
     }
 
     @FXML
@@ -163,6 +164,7 @@ public class PrimaryController {
             ds.mostraErrore( "Errore di salvataggio");
         }
 
+        toggleMenu(actionEvent);
     }
 
     @FXML

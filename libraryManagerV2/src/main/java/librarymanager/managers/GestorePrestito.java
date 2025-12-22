@@ -44,6 +44,10 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
             throw new PrestitoException("L'utente risulta non attivo");
         }
 
+        if (elem.getDataFinePrestabilita().isBefore(elem.getDataInizio())) {
+            throw new PrestitoException("La data di scadenza del prestito deve essere successiva a quella di registrazione!");
+        }
+
         elem.getUtente().setPrestitiAttivi(elem.getUtente().getPrestitiAttivi() + 1);
         elem.getLibro().setCopieDisponibili(elem.getLibro().getCopieDisponibili() - 1);
 
