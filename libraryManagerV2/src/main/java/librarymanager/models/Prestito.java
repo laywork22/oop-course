@@ -81,6 +81,10 @@ public class Prestito implements Comparable<Prestito>{
         this.stato = stato;
     }
 
+    public static void setNextId(int nextId){
+        Prestito.nextId = nextId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

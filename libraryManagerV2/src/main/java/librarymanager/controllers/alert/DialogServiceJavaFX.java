@@ -64,8 +64,6 @@ public class DialogServiceJavaFX implements DialogService {
 
         dialogPane.getStyleClass().addAll("custom-alert", cssAlertType);
 
-        alert.showAndWait();
-
         Optional<ButtonType> result = alert.showAndWait();
 
         return result.isPresent() && result.get() == ButtonType.OK;

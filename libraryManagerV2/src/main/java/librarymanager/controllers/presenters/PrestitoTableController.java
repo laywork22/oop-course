@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -100,7 +101,45 @@ public class PrestitoTableController implements AreaPresenter {
         statoClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getStato()));
 
         prestitoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
+
+        prestitoTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            public void updateItem(Prestito prestito, boolean empty) {
+                super.updateItem(prestito, empty);
+
+                if (empty) {
+                    setStyle("");
+                    return;
+                }
+
+                if (isSelected()) {
+                    setStyle("");
+                }
+                else {
+                    try {
+                        LocalDate now = LocalDate.now();
+                        LocalDate scadenza = prestito.getDataFinePrestabilita();
+                        LocalDate scadenzaEffettiva = prestito.getDataFineEffettiva();
+
+                        if (prestito.getStato() == StatoPrestito.CHIUSO) {
+                            setStyle("-fx-background-color: lightgreen;");
+                        } else if (scadenza.isBefore(now)) {
+                            if (scadenzaEffettiva != null) {
+                                setStyle("-fx-background-color: orange;");
+                            }
+                            else {
+                                setStyle("-fx-background-color: red;");
+                            }
+                        } else if (!scadenza.isAfter(now.plusDays(5))) {
+                            setStyle("-fx-background-color: yellow;");
+                        } else {
+                            setStyle("");
+                        }
+                    } catch (Exception e) { setStyle(""); }
+                }
+            }
+        });
+
         aggiornaTabella();
 
     }
@@ -200,7 +239,6 @@ public class PrestitoTableController implements AreaPresenter {
     @Override
     public void ricarica() {
         aggiornaTabella();
-        prestitoTable.refresh();
     }
 
     @Override
@@ -229,7 +267,8 @@ public class PrestitoTableController implements AreaPresenter {
             // Cerca per Cognome Utente o Titolo Libro prestato
             return prestito.getUtente().getCognome().toLowerCase().contains(filtro_lc) ||
                     prestito.getLibro().getTitolo().toLowerCase().contains(filtro_lc) ||
-                    prestito.getUtente().getNome().toLowerCase().contains(filtro_lc);
+                    prestito.getUtente().getNome().toLowerCase().contains(filtro_lc)  ||
+                    prestito.getUtente().getMatricola().toLowerCase().contains(filtro_lc);
         });
     }
 }

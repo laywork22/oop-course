@@ -206,6 +206,8 @@ public class GestoreArchivio {
 
         if (!fileLibri.exists() || !fileUtenti.exists() || !filePrestiti.exists()) return null;
 
+        Prestito.setNextId(1);
+
         List<Libro> libri = caricaLibriCSV(fileLibri);
         List<Utente> utenti = caricaUtentiCSV(fileUtenti);
         List<Prestito> prestiti = caricaPrestitiCSV(filePrestiti, libri, utenti);

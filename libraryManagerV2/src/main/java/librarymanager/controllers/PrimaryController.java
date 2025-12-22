@@ -114,6 +114,8 @@ public class PrimaryController {
 
         setAreaPrestiti(null);
 
+        toggleMenu(null);
+
         areaCorrente.ricarica();
 
     }
@@ -135,7 +137,6 @@ public class PrimaryController {
             salvaFileConNome(actionEvent);
         }
 
-        toggleMenu(actionEvent);
     }
 
     @FXML
@@ -162,7 +163,6 @@ public class PrimaryController {
             ds.mostraErrore( "Errore di salvataggio");
         }
 
-        toggleMenu(actionEvent);
     }
 
     @FXML
@@ -172,6 +172,8 @@ public class PrimaryController {
 
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
+
+        gestorePrestito.aggiornaStati();
 
         toggleMenu(actionEvent);
     }
@@ -197,6 +199,7 @@ public class PrimaryController {
         });
 
         areaCorrente.ricarica();
+
         toggleMenu(actionEvent);
     }
 
