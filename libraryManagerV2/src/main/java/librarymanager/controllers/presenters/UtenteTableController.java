@@ -76,10 +76,6 @@ public class UtenteTableController implements AreaPresenter{
 
         tabellaUtenti.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        aggiornaTabella();
-    }
-
-    private void aggiornaTabella() {
         lista = FXCollections.observableArrayList(gestoreUtente.getLista());
         listaFiltrata = new FilteredList<>(lista, p->true);
         listaOrdinata = new SortedList<>(listaFiltrata);
@@ -87,6 +83,15 @@ public class UtenteTableController implements AreaPresenter{
         listaOrdinata.comparatorProperty().bind(tabellaUtenti.comparatorProperty());
 
         tabellaUtenti.setItems(listaOrdinata);
+
+        aggiornaTabella();
+    }
+
+    private void aggiornaTabella() {
+        List<Utente> nuovaLista = gestoreUtente.getLista();
+
+        lista.setAll(nuovaLista);
+
         tabellaUtenti.refresh();
     }
 

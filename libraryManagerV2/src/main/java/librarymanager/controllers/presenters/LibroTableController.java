@@ -71,19 +71,22 @@ public class LibroTableController implements AreaPresenter {
 
         tabellaLibri.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        lista = FXCollections.observableArrayList(gestoreLibro.getLista());
+        listaFiltrata = new FilteredList<>(lista, p->true);
+        listaOrdinata = new SortedList<>(listaFiltrata);
+
+        listaOrdinata.comparatorProperty().bind(tabellaLibri.comparatorProperty());
+
+        tabellaLibri.setItems(listaOrdinata);
+
         aggiornaTabella();
     }
 
     private void aggiornaTabella() {
-        // Ricostruisco la lista osservabile dai dati aggiornati del gestore
-        lista = FXCollections.observableArrayList(gestoreLibro.getLista());
-        listaFiltrata = new FilteredList<>(lista, p -> true);
-        listaOrdinata = new SortedList<>(listaFiltrata);
+        List<Libro> nuovaLista = gestoreLibro.getLista();
 
-        // Collego l'ordinamento
-        listaOrdinata.comparatorProperty().bind(tabellaLibri.comparatorProperty());
+        lista.setAll(nuovaLista);
 
-        tabellaLibri.setItems(listaOrdinata);
         tabellaLibri.refresh();
     }
 
@@ -179,6 +182,10 @@ public class LibroTableController implements AreaPresenter {
     @Override
     public void ordina(String criterio) {
         if (mappaOrdinamento.containsKey(criterio)) {
+            listaOrdinata.comparatorProperty().unbind();
+
+            tabellaLibri.getSortOrder().clear();
+
             listaOrdinata.setComparator(mappaOrdinamento.get(criterio));
         }
     }

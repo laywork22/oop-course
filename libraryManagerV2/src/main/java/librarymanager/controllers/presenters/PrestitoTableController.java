@@ -43,7 +43,7 @@ public class PrestitoTableController implements AreaPresenter {
     private DialogService ds;
 
     @javafx.fxml.FXML
-    private TableView<Prestito> prestitoTable;
+    private TableView<Prestito> tabellaPrestiti;
     @javafx.fxml.FXML
     private AnchorPane mainContentPrestiti;
     @javafx.fxml.FXML
@@ -100,9 +100,10 @@ public class PrestitoTableController implements AreaPresenter {
         dataConsegnaClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getDataFineEffettiva()));
         statoClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getStato()));
 
-        prestitoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tabellaPrestiti.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        prestitoTable.setRowFactory(tv -> new TableRow<>() {
+
+        tabellaPrestiti.setRowFactory(tv -> new TableRow<>() {
             @Override
             public void updateItem(Prestito prestito, boolean empty) {
                 super.updateItem(prestito, empty);
@@ -140,19 +141,25 @@ public class PrestitoTableController implements AreaPresenter {
             }
         });
 
+
+        lista = FXCollections.observableArrayList();
+        listaFiltrata = new FilteredList<>(lista, p->true);
+        listaOrdinata = new SortedList<>(listaFiltrata);
+
+        listaOrdinata.comparatorProperty().bind(tabellaPrestiti.comparatorProperty());
+
+        tabellaPrestiti.setItems(listaOrdinata);
+
         aggiornaTabella();
 
     }
 
     private void aggiornaTabella() {
-        lista = FXCollections.observableArrayList(gestorePrestito.getLista());
-        listaFiltrata = new FilteredList<>(lista, p->true);
-        listaOrdinata = new SortedList<>(listaFiltrata);
+        List<Prestito> nuovaLista = gestorePrestito.getLista();
 
-        listaOrdinata.comparatorProperty().bind(prestitoTable.comparatorProperty());
+        lista.setAll(nuovaLista);
 
-        prestitoTable.setItems(listaOrdinata);
-        prestitoTable.refresh();
+        tabellaPrestiti.refresh();
     }
 
     private void apriForm(Prestito prestitoDaModificare) {
@@ -210,10 +217,10 @@ public class PrestitoTableController implements AreaPresenter {
 
     @Override
     public void onRimuovi() {
-        Prestito selezione = prestitoTable.getSelectionModel().getSelectedItem();
+        Prestito selezione = tabellaPrestiti.getSelectionModel().getSelectedItem();
 
         if (selezione != null) {
-            if (ds.chiediConferma("Eliminare " + selezione.getId() + " - " + selezione.getLibro().getTitolo() + " (" + selezione.getLibro().getIsbn() + ")")) {
+            if (ds.chiediConferma("Eliminare Prestito n.  " + selezione.getId() + " - " + selezione.getLibro().getTitolo() + " (" + selezione.getLibro().getIsbn() + ")")) {
                 try {
                     gestorePrestito.rimuovi(selezione.getId());
                     aggiornaTabella();
@@ -226,7 +233,7 @@ public class PrestitoTableController implements AreaPresenter {
 
     @Override
     public void onModifica() {
-        Prestito selezione = prestitoTable.getSelectionModel().getSelectedItem();
+        Prestito selezione = tabellaPrestiti.getSelectionModel().getSelectedItem();
 
         if (selezione != null) {
             apriForm(selezione);
@@ -251,11 +258,10 @@ public class PrestitoTableController implements AreaPresenter {
         if (mappaOrdinamento.containsKey(criterio)) {
             listaOrdinata.comparatorProperty().unbind();
 
-            listaOrdinata.setComparator(mappaOrdinamento.get(criterio));
+            tabellaPrestiti.getSortOrder().clear();
 
-            prestitoTable.getSortOrder().clear();
+            listaOrdinata.setComparator(mappaOrdinamento.get(criterio));
         }
-        aggiornaTabella();
     }
 
     @Override
