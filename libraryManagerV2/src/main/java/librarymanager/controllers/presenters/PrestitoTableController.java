@@ -43,8 +43,6 @@ public class PrestitoTableController implements AreaPresenter {
     private DialogService ds;
 
     @javafx.fxml.FXML
-    private TableView<Prestito> tabellaPrestiti;
-    @javafx.fxml.FXML
     private AnchorPane mainContentPrestiti;
     @javafx.fxml.FXML
     private TableColumn<Prestito, String> cognomeClm;
@@ -68,6 +66,8 @@ public class PrestitoTableController implements AreaPresenter {
     private TableColumn<Prestito, Integer> idClm;
     @javafx.fxml.FXML
     private TableColumn<Prestito, StatoPrestito> statoClm;
+    @FXML
+    private TableView<Prestito> tabellaPrestiti;
 
     public PrestitoTableController(GestorePrestito gestorePrestito, GestoreLibro gestoreLibro, GestoreUtente gestoreUtente) {
         this.gestorePrestito = gestorePrestito;

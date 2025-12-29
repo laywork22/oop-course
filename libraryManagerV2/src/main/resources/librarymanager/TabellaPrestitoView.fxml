@@ -5,7 +5,7 @@
 
 <AnchorPane fx:id="mainContentPrestiti" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="734.0" stylesheets="@primarystyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanager.controllers.presenters.PrestitoTableController">
    <children>
-      <TableView fx:id="prestitoTable" editable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="tabellaPrestiti" editable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="idClm" prefWidth="24.0" text="ID" />
             <TableColumn prefWidth="54.0" text="Libro">
