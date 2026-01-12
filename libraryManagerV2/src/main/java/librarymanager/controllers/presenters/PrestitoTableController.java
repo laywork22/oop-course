@@ -38,7 +38,7 @@ import java.util.*;
  * @invariant Le celle mostrano dati aggregati corretti (es. Nome Utente + Titolo Libro).
  * @invariant Il colore della riga deve riflettere lo stato del prestito rispetto alla data odierna (Verde=Chiuso, Rosso=Scaduto, Giallo=In Scadenza).
  */
-public class PrestitoTableController implements AreaPresenter {
+public class PrestitoTableController implements AreaEditablePresenter {
     private final GestorePrestito gestorePrestito;
     private final GestoreUtente gestoreUtente;
     private final GestoreLibro gestoreLibro;

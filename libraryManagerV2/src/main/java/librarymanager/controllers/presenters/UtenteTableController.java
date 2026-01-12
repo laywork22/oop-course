@@ -34,7 +34,7 @@ import java.util.*;
  * @invariant Il numero di prestiti attivi visualizzato per ogni utente deve corrispondere allo stato reale nel sistema.
  * @invariant 'listaOrdinata' è sempre sincronizzata con i filtri applicati su 'listaFiltrata'.
  */
-public class UtenteTableController implements AreaPresenter{
+public class UtenteTableController implements AreaEditablePresenter {
     private GestoreUtente gestoreUtente;
     private Map<String, Comparator<Utente>> mappaOrdinamento;
 

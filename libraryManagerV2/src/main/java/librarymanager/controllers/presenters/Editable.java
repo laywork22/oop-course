@@ -1,6 +1,6 @@
 package librarymanager.controllers.presenters;
 
-public interface Editor {
+public interface Editable {
     /**
      * @brief Innesca la procedura di creazione di un nuovo elemento.
      * @details Solitamente apre una finestra modale (Form).

@@ -13,11 +13,7 @@ import javafx.stage.Window;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import librarymanager.alert.DialogService;
-import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.controllers.presenters.AreaPresenter;
-import librarymanager.controllers.presenters.LibroTableController;
-import librarymanager.controllers.presenters.PrestitoTableController;
-import librarymanager.controllers.presenters.UtenteTableController;
+import librarymanager.controllers.presenters.*;
 import librarymanager.managers.*;
 import librarymanager.models.ArchivioDati;
 import librarymanager.models.Libro;
@@ -110,15 +106,15 @@ public class PrimaryController {
         });
 
         addBtn.setOnAction(e -> {
-            if (areaCorrente != null) areaCorrente.onAggiungi();
+            if (areaCorrente != null && areaCorrente instanceof Editable) ((Editable) areaCorrente).onAggiungi();
         });
 
         modifyButton.setOnAction(e -> {
-            if (areaCorrente != null) areaCorrente.onModifica();
+            if (areaCorrente != null  && areaCorrente instanceof Editable) ((Editable) areaCorrente).onModifica();
         });
 
         removeBtn.setOnAction(e -> {
-            if (areaCorrente != null) areaCorrente.onRimuovi();
+            if (areaCorrente != null  && areaCorrente instanceof Editable) ((Editable)areaCorrente).onRimuovi();
         });
 
         gestorePrestito.aggiornaStati();
@@ -130,9 +126,6 @@ public class PrimaryController {
         areaCorrente.ricarica();
 
     }
-
-
-
 
     @FXML
     public void salvaFile(ActionEvent actionEvent) {

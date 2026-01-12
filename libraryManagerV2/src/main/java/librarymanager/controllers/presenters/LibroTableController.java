@@ -34,7 +34,7 @@ import java.util.*;
  * @invariant 'listaOrdinata' deve riflettere i cambiamenti di 'listaFiltrata', a sua volta legata a 'lista'.
  * @invariant 'lista' deve contenere tutti e soli i libri restituiti da gestoreLibro.getLista() dopo ogni operazione di aggiornamento.
  */
-public class LibroTableController implements AreaPresenter {
+public class LibroTableController implements AreaEditablePresenter {
 
     private final GestoreLibro gestoreLibro;
     private final Map<String, Comparator<Libro>> mappaOrdinamento;
