@@ -15,8 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanager.controllers.alert.DialogService;
-import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.alert.DialogService;
+import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormUtenteController;
 import librarymanager.managers.GestoreUtente;
 import librarymanager.models.StatoUtente;
@@ -25,6 +25,15 @@ import librarymanager.models.Utente;
 import java.io.IOException;
 import java.util.*;
 
+
+/**
+ * @class UtenteTableController
+ * @brief Controller per la gestione della vista tabellare degli utenti.
+ * @details Gestisce l'interazione tra la UI e il GestoreUtente, permettendo operazioni CRUD sugli utenti.
+ * * @invariant 'tabellaUtenti' deve visualizzare in modo consistente gli utenti gestiti da GestoreUtente.
+ * @invariant Il numero di prestiti attivi visualizzato per ogni utente deve corrispondere allo stato reale nel sistema.
+ * @invariant 'listaOrdinata' è sempre sincronizzata con i filtri applicati su 'listaFiltrata'.
+ */
 public class UtenteTableController implements AreaPresenter{
     private GestoreUtente gestoreUtente;
     private Map<String, Comparator<Utente>> mappaOrdinamento;
@@ -65,6 +74,11 @@ public class UtenteTableController implements AreaPresenter{
 
 
 
+    /**
+     * @brief Inizializza la tabella utenti.
+     * @details Collega le colonne (Nome, Cognome, Matricola, Email, Prestiti, Stato) alle proprietà dell'oggetto Utente.
+     * @post La tabella è pronta e popolata con la lista degli utenti fornita dal GestoreUtente.
+     */
     @FXML
     public void initialize() {
         nomeClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getNome()));
@@ -95,12 +109,23 @@ public class UtenteTableController implements AreaPresenter{
         tabellaUtenti.refresh();
     }
 
+    /**
+     * @brief Apre il form per la registrazione di un nuovo utente.
+     * @post Se l'operazione ha successo, il nuovo utente è aggiunto al sistema e visibile in tabella.
+     */
     @Override
     public void onAggiungi() {
         apriForm(null);
     }
 
-
+    /**
+     * @brief Rimuove (archivia) l'utente selezionato.
+     * @pre Un utente deve essere selezionato nella tabella.
+     * @pre L'utente selezionato deve avere 0 prestiti attivi (vincolo di business).
+     * @post Se confermato e valido, l'utente viene posto in stato ARCHIVIATO.
+     * @post La tabella viene aggiornata per riflettere il nuovo stato.
+     * @note Corretto rispetto al codice originale: ora documenta la rimozione di un Utente, non di un Prestito.
+     */
     @Override
     public void onRimuovi() {
         Utente selezione = tabellaUtenti.getSelectionModel().getSelectedItem();
@@ -163,6 +188,12 @@ public class UtenteTableController implements AreaPresenter{
     }
 
 
+    /**
+     * @brief Modifica i dati anagrafici dell'utente selezionato.
+     * @pre Un utente deve essere selezionato nella tabella.
+     * @post Apre il form di modifica pre-caricato con i dati dell'utente.
+     * @post Se salvato, i dati (Nome, Cognome, Email) vengono aggiornati nel Gestore e nella vista.
+     */
     @Override
     public void onModifica() {
         Utente selezione = tabellaUtenti.getSelectionModel().getSelectedItem();
@@ -171,23 +202,37 @@ public class UtenteTableController implements AreaPresenter{
             apriForm(selezione);
         }
         else {
-            ds.mostraErrore("Seleziona un utente da modificare");
+            ds.mostraAvviso("Seleziona un utente da modificare");
         }
 
         aggiornaTabella();
     }
 
+    /**
+     * @brief Sincronizza la vista con il modello dati.
+     * @post I dati visualizzati corrispondono esattamente allo stato attuale del GestoreUtente.
+     */
     @Override
     public void ricarica() {
         aggiornaTabella();
         tabellaUtenti.refresh();
     }
 
+    /**
+     * @brief Fornisce i criteri di ordinamento per gli utenti.
+     * @return Lista contenente "Nome (A-Z)" e "Cognome (A-Z)".
+     */
     @Override
     public List<String> getCriteriOrdinamento() {
         return new ArrayList<>(mappaOrdinamento.keySet());
     }
 
+    /**
+     * @brief Ordina la lista degli utenti.
+     * @param criterio Chiave del criterio di ordinamento desiderato.
+     * @pre criterio valido presente nella mappa.
+     * @post La tabella mostra gli utenti ordinati alfabeticamente per Nome o Cognome.
+     */
     @Override
     public void ordina(String criterio) {
         if (mappaOrdinamento.containsKey(criterio)) {
@@ -200,6 +245,11 @@ public class UtenteTableController implements AreaPresenter{
         aggiornaTabella();
     }
 
+    /**
+     * @brief Filtra i prestiti in base ai dati dell'utente o del libro.
+     * @param filtro Testo da ricercare.
+     * @post La tabella mostra solo i prestiti dove Cognome/Nome utente, Matricola o Titolo libro corrispondono al filtro.
+     */
     @Override
     public void filtra(String filtro) {
         listaFiltrata.setPredicate(utente -> {

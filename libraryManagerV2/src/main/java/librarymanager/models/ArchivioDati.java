@@ -1,6 +1,11 @@
 package librarymanager.models;
 
+import librarymanager.managers.Gestore;
+import librarymanager.managers.GestoreLibro;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ArchivioDati {
     private List<Libro> listaLibri;

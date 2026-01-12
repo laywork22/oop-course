@@ -16,8 +16,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanager.controllers.alert.DialogService;
-import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.alert.DialogService;
+import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormPrestitoController;
 import librarymanager.managers.GestoreLibro;
 import librarymanager.managers.GestorePrestito;
@@ -29,6 +29,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * @class PrestitoTableController
+ * @brief Controller per la gestione della vista tabellare dei prestiti.
+ * @details Coordina la visualizzazione complessa dei prestiti, che coinvolge entità Utente e Libro.
+ * Gestisce inoltre la logica visiva di notifica (colorazione righe) per scadenze e ritardi.
+ * * @invariant Ogni riga della tabella rappresenta un Prestito univoco associato a un Utente e un Libro esistenti.
+ * @invariant Le celle mostrano dati aggregati corretti (es. Nome Utente + Titolo Libro).
+ * @invariant Il colore della riga deve riflettere lo stato del prestito rispetto alla data odierna (Verde=Chiuso, Rosso=Scaduto, Giallo=In Scadenza).
+ */
 public class PrestitoTableController implements AreaPresenter {
     private final GestorePrestito gestorePrestito;
     private final GestoreUtente gestoreUtente;
@@ -85,6 +94,13 @@ public class PrestitoTableController implements AreaPresenter {
 
     }
 
+    /**
+     * @brief Inizializza la tabella prestiti e la logica di colorazione delle righe.
+     * @details Imposta un RowFactory personalizzato per cambiare lo stile della riga (CSS) in base
+     * a dataScadenza e dataConsegnaEffettiva.
+     * @post Le colonne sono legate alle proprietà nidificate (Prestito -> Utente -> Nome, ecc.).
+     * @post La tabella visualizza i prestiti con il color-coding appropriato.
+     */
     @FXML
     public void initialize() {
         idClm.setCellValueFactory(r -> new SimpleObjectProperty<>(r.getValue().getId()));
@@ -209,12 +225,26 @@ public class PrestitoTableController implements AreaPresenter {
             ds.mostraErrore("Impossibile aprire il form: " + e.getMessage());
         }
     }
-    
+
+    /**
+     * @brief Avvia la creazione di un nuovo prestito.
+     * @details Apre il form iniettando tutti i gestori necessari (Libro, Utente, Prestito) per permettere la selezione.
+     * @post Se il prestito è creato con successo, viene aggiunto al GestorePrestito.
+     * @post Le disponibilità del libro e i contatori dell'utente vengono aggiornati indirettamente.
+     */
     @Override
     public void onAggiungi() {
         apriForm(null);
     }
 
+    /**
+     * @brief Chiude il prestito selezionato (Restituzione).
+     * @details Non elimina fisicamente il record, ma lo segna come concluso (rimozione logica dai prestiti attivi).
+     * @pre Un prestito deve essere selezionato.
+     * @post Il prestito viene marcato come CHIUSO o CHIUSO_IN_RITARDO in base alla data odierna.
+     * @post La data di fine effettiva viene impostata a oggi.
+     * @post Il libro torna disponibile e il contatore dell'utente viene decrementato.
+     */
     @Override
     public void onRimuovi() {
         Prestito selezione = tabellaPrestiti.getSelectionModel().getSelectedItem();
@@ -231,6 +261,12 @@ public class PrestitoTableController implements AreaPresenter {
         }
     }
 
+    /**
+     * @brief Modifica un prestito esistente (es. proroga data).
+     * @pre Un prestito deve essere selezionato.
+     * @pre Il prestito non deve essere in uno stato concluso (CHIUSO o CHIUSO_IN_RITARDO).
+     * @post Se modificato, le nuove date vengono salvate e lo stato ricalcolato.
+     */
     @Override
     public void onModifica() {
         Prestito selezione = tabellaPrestiti.getSelectionModel().getSelectedItem();
@@ -239,20 +275,32 @@ public class PrestitoTableController implements AreaPresenter {
             apriForm(selezione);
         }
         else {
-            ds.mostraErrore("Seleziona un prestito da modificare");
+            ds.mostraAvviso("Seleziona un prestito da modificare");
         }
     }
 
+    /**
+     * @brief Ricarica i dati dal gestore.
+     * @post La vista è allineata con i dati presenti in GestorePrestito.
+     */
     @Override
     public void ricarica() {
         aggiornaTabella();
     }
 
+    /**
+     * @brief Restituisce i criteri di ordinamento (Utente, Libro, Data, Stato).
+     */
     @Override
     public List<String> getCriteriOrdinamento() {
         return new ArrayList<>(mappaOrdinamento.keySet());
     }
 
+    /**
+     * @brief Ordina i prestiti.
+     * @param criterio Criterio scelto (es. per Data Inizio o per Cognome Utente).
+     * @post La tabella viene riordinata.
+     */
     @Override
     public void ordina(String criterio) {
         if (mappaOrdinamento.containsKey(criterio)) {
@@ -264,6 +312,12 @@ public class PrestitoTableController implements AreaPresenter {
         }
     }
 
+    /**
+     * @brief Filtra i prestiti visualizzati.
+     * @details Permette la ricerca incrociata su più campi.
+     * @param filtro Stringa di ricerca.
+     * @post Visualizza i prestiti che corrispondono per: Nome/Cognome/Matricola Utente OPPURE Titolo Libro.
+     */
     @Override
     public void filtra(String filtro) {
         listaFiltrata.setPredicate(prestito -> {

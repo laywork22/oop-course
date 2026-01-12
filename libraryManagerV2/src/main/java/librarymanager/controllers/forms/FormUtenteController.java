@@ -7,10 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import librarymanager.controllers.alert.DialogService;
-import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.alert.DialogService;
+import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.managers.GestoreUtente;
-import librarymanager.models.Libro;
 import librarymanager.models.Utente;
 import librarymanager.validators.formvalidators.FormValidator;
 

@@ -12,8 +12,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import javafx.util.Duration;
-import librarymanager.controllers.alert.DialogService;
-import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.alert.DialogService;
+import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.controllers.presenters.AreaPresenter;
 import librarymanager.controllers.presenters.LibroTableController;
 import librarymanager.controllers.presenters.PrestitoTableController;
@@ -26,9 +26,11 @@ import librarymanager.models.Utente;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PrimaryController {
+    private Map<Class<?>, Gestore<?, ?>> mappaGestori;
     private GestoreLibro gestoreLibro;
     private GestorePrestito gestorePrestito;
     private GestoreUtente gestoreUtente;
@@ -77,17 +79,26 @@ public class PrimaryController {
     @FXML
     private AnchorPane tabellaContent;
 
+    public PrimaryController() {}
+
+    public PrimaryController(Map<Class<?>, Gestore<?, ?>> mappaGestori, GestoreArchivio gestoreArchivio, DialogService ds) {
+        this.ds = ds;
+        this.mappaGestori = mappaGestori;
+
+        this.gestoreArchivio = gestoreArchivio;
+
+        this.gestoreLibro = (GestoreLibro) mappaGestori.get(GestoreLibro.class);
+        this.gestorePrestito = (GestorePrestito) mappaGestori.get(GestorePrestito.class);
+        this.gestoreUtente = (GestoreUtente) mappaGestori.get(GestoreUtente.class);
+
+        if (gestoreLibro == null || gestorePrestito == null || gestoreUtente == null) {
+            throw new IllegalStateException("Uno o più gestori non sono stati inizializzati correttamente nella mappa.");
+        }
+    }
+
+
     @FXML
     public void initialize() {
-        this.ds = new DialogServiceJavaFX();
-
-
-        gestoreLibro = new GestoreLibro();
-        gestorePrestito = new GestorePrestito();
-        gestoreUtente = new GestoreUtente();
-
-        gestoreArchivio = new GestoreArchivio();
-
         gestoreCorrente = gestorePrestito;
 
         sideMenu.setTranslateX(-200);
@@ -126,7 +137,6 @@ public class PrimaryController {
     @FXML
     public void salvaFile(ActionEvent actionEvent) {
         if (directoryCorrente != null) {
-
 
             ArchivioDati archivio = new ArchivioDati(gestoreLibro.getLista(), gestoreUtente.getLista(), gestorePrestito.getLista());
 

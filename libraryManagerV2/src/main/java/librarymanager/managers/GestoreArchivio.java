@@ -143,7 +143,6 @@ public class GestoreArchivio {
         return listaUtenti;
     }
 
-    // ("ID;MATRICOLA;NOME UTENTE;COGNOME;TITOLO;AUTORI;ISBN;DATA INIZIO;DATA FINE PRESTABILITA;DATA FINE EFFETTIVA;STATO");
     private List<Prestito> caricaPrestitiCSV(File filePrestiti, List<Libro> listaLibri, List<Utente> listaUtenti) {
         List<Prestito> listaPrestiti = new ArrayList<>();
 
@@ -213,8 +212,6 @@ public class GestoreArchivio {
         List<Prestito> prestiti = caricaPrestitiCSV(filePrestiti, libri, utenti);
 
         ArchivioDati ad = new ArchivioDati(libri, utenti, prestiti);
-
-        if (ad == null) throw new NullPointerException();
 
         return ad;
     }

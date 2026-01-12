@@ -15,8 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import librarymanager.controllers.alert.DialogService;
-import librarymanager.controllers.alert.DialogServiceJavaFX;
+import librarymanager.alert.DialogService;
+import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormLibroController;
 import librarymanager.managers.GestoreLibro;
 import librarymanager.models.Libro;
@@ -25,7 +25,15 @@ import librarymanager.models.StatoLibro;
 import java.io.IOException;
 import java.util.*;
 
-// Nota: Aggiunto <Libro> all'interfaccia AreaPresenter per type safety
+/**
+ * @class LibroTableController
+ * @brief Controller per la gestione della vista tabellare dei libri.
+ * @details Implementa la logica di presentazione per l'area libri, gestendo la sincronizzazione
+ * tra il GestoreLibro e la TableView JavaFX.
+ * * @invariant La TableView 'tabellaLibri' mostra sempre il contenuto di 'listaOrdinata'.
+ * @invariant 'listaOrdinata' deve riflettere i cambiamenti di 'listaFiltrata', a sua volta legata a 'lista'.
+ * @invariant 'lista' deve contenere tutti e soli i libri restituiti da gestoreLibro.getLista() dopo ogni operazione di aggiornamento.
+ */
 public class LibroTableController implements AreaPresenter {
 
     private final GestoreLibro gestoreLibro;
@@ -49,6 +57,7 @@ public class LibroTableController implements AreaPresenter {
     @FXML private TableColumn<Libro, Integer> copieDisponibiliClm;
     @FXML private TableColumn<Libro, StatoLibro> statoClm;
 
+
     public LibroTableController(GestoreLibro gestoreLibro) {
         this.gestoreLibro = gestoreLibro;
         this.ds = new DialogServiceJavaFX(); // Inizializzazione necessaria!
@@ -59,6 +68,13 @@ public class LibroTableController implements AreaPresenter {
         mappaOrdinamento.put("Anno (Recenti)", Comparator.comparing(Libro::getAnno).reversed());
     }
 
+    /**
+     * @brief Inizializza il controller, le colonne della tabella e il binding dei dati.
+     * @details Configura le PropertyValueFactory per le colonne, imposta la politica di ridimensionamento
+     * e crea la catena di ObservableList (Base -> Filtered -> Sorted) per la gestione della vista.
+     * @post La TableView è popolata con i dati attuali del GestoreLibro.
+     * @post Le colonne Titolo, Autori, ISBN, Anno, Copie e Stato sono correttamente legate al modello Libro.
+     */
     @FXML
     public void initialize() {
         TitoloClm.setCellValueFactory(r -> new SimpleStringProperty(r.getValue().getTitolo()));
@@ -90,21 +106,41 @@ public class LibroTableController implements AreaPresenter {
         tabellaLibri.refresh();
     }
 
+    /**
+     * @brief Avvia la procedura di creazione di un nuovo libro.
+     * @details Apre la finestra modale 'LibroView.fxml' in modalità di aggiunta.
+     * @post Se l'utente conferma il salvataggio nel form, il nuovo libro viene aggiunto al GestoreLibro.
+     * @post La tabella viene aggiornata per mostrare il nuovo inserimento.
+     */
     @Override
     public void onAggiungi() {
         apriForm(null);
     }
 
+    /**
+     * @brief Avvia la procedura di modifica per il libro selezionato.
+     * @details Apre la finestra modale 'LibroView.fxml' popolata con i dati del libro selezionato.
+     * @pre Un libro deve essere attualmente selezionato nella tabella (tabellaLibri.getSelectionModel().getSelectedItem() != null).
+     * @post Se l'utente conferma le modifiche, il libro nel GestoreLibro viene aggiornato.
+     * @post La tabella riflette immediatamente le modifiche apportate (es. cambio titolo o copie).
+     * @note Se nessun libro è selezionato, viene mostrato un avviso all'utente.
+     */
     @Override
     public void onModifica() {
         Libro selezione = tabellaLibri.getSelectionModel().getSelectedItem();
         if (selezione != null) {
             apriForm(selezione);
         } else {
-            ds.mostraErrore("Seleziona un libro da modificare.");
+            ds.mostraAvviso("Seleziona un libro da modificare.");
         }
     }
 
+
+    /**
+     * @brief Aggiorna i dati della tabella sincronizzandoli con il Gestore.
+     * @post La 'lista' osservabile contiene esattamente gli elementi restituiti da gestoreLibro.getLista().
+     * @post La TableView viene rinfrescata visivamente.
+     */
     @Override
     public void ricarica() {
         aggiornaTabella();
@@ -157,6 +193,15 @@ public class LibroTableController implements AreaPresenter {
         }
     }
 
+    /**
+     * @brief Rimuove (archivia) il libro selezionato.
+     * @details Chiede conferma all'utente prima di procedere con la rimozione logica.
+     * @pre Un libro deve essere selezionato nella tabella.
+     * @pre Il libro selezionato non deve avere copie attualmente in prestito (vincolo verificato dal GestoreLibro).
+     * @post Se confermato e le pre-condizioni del Gestore sono soddisfatte, lo stato del libro diventa ARCHIVIATO.
+     * @post Il libro rimosso non viene più visualizzato nella lista attiva (se il filtro lo esclude) o il suo stato visivo cambia.
+     * @throws Mostra un messaggio di errore se il GestoreLibro solleva eccezioni (es. copie in prestito).
+     */
     @Override
     public void onRimuovi() {
         Libro selezione = tabellaLibri.getSelectionModel().getSelectedItem();
@@ -172,13 +217,22 @@ public class LibroTableController implements AreaPresenter {
         }
     }
 
-
-
+    /**
+     * @brief Restituisce l'elenco dei criteri di ordinamento disponibili.
+     * @return Lista di stringhe contenente le chiavi della mappaOrdinamento (es. "Titolo (A-Z)", "Anno (Recenti)").
+     */
     @Override
     public List<String> getCriteriOrdinamento() {
         return new ArrayList<>(mappaOrdinamento.keySet());
     }
 
+    /**
+     * @brief Applica un criterio di ordinamento alla tabella.
+     * @param criterio Stringa che identifica il comparatore da utilizzare.
+     * @pre criterio deve essere una chiave valida in 'mappaOrdinamento'.
+     * @post La 'listaOrdinata' viene riordinata secondo il comparatore associato al criterio.
+     * @post L'ordinamento visuale della TableView viene aggiornato.
+     */
     @Override
     public void ordina(String criterio) {
         if (mappaOrdinamento.containsKey(criterio)) {
@@ -190,6 +244,12 @@ public class LibroTableController implements AreaPresenter {
         }
     }
 
+    /**
+     * @brief Filtra i libri visualizzati in base a una stringa di ricerca.
+     * @param testo Stringa da cercare (case-insensitive).
+     * @post La 'listaFiltrata' contiene solo i libri che hanno un match parziale con Titolo, Autori o ISBN.
+     * @post Se 'testo' è null o vuoto, vengono mostrati tutti i libri.
+     */
     @Override
     public void filtra(String testo) {
         listaFiltrata.setPredicate(libro -> {
