@@ -146,7 +146,8 @@ public class UtenteTableController implements AreaEditablePresenter {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarymanager/UtenteView.fxml"));
             Parent root = loader.load();
-            FormUtenteController controller = loader.getController();
+
+            FormController<Utente> controller = loader.getController();
 
             if (utenteDaModificare == null) {
                 controller.setFormOnAggiungi();

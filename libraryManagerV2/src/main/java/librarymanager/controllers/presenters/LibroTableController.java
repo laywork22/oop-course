@@ -151,7 +151,7 @@ public class LibroTableController implements AreaEditablePresenter {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarymanager/LibroView.fxml"));
             Parent root = loader.load();
-            FormLibroController controller = loader.getController();
+            FormController<Libro> controller = loader.getController();
 
             if (libroDaModificare == null) {
                 controller.setFormOnAggiungi();

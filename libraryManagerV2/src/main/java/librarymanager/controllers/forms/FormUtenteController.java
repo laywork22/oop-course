@@ -8,12 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import librarymanager.alert.DialogService;
+import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.managers.GestoreUtente;
 import librarymanager.models.Utente;
 import librarymanager.validators.formvalidators.FormValidator;
 
-public class FormUtenteController {
+public class FormUtenteController implements FormController<Utente> {
     private GestoreUtente gestoreUtente;
     private FormValidator formValidator;
     private DialogService ds;
@@ -80,6 +81,7 @@ public class FormUtenteController {
         stage.close();
     }
 
+    @Override
     public void setFormOnAggiungi() {
         nomeFld.clear();
         cognomeFld.clear();
@@ -95,6 +97,7 @@ public class FormUtenteController {
         salvaBtn.setText("Aggiungi");
     }
 
+    @Override
     public void setFormOnModifica(Utente utente) {
         nomeFld.setText(utente.getNome());
         cognomeFld.setText(utente.getCognome());
@@ -111,7 +114,9 @@ public class FormUtenteController {
         insModLbl.setText("Modifica Utente");
     }
 
+    @Override
     public void setOnSaveAction(Callback<Utente, Boolean> onSaveAction) {
         this.onSaveAction = onSaveAction;
     }
+
 }

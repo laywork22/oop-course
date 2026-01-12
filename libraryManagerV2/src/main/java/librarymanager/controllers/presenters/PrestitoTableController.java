@@ -181,10 +181,18 @@ public class PrestitoTableController implements AreaEditablePresenter {
     private void apriForm(Prestito prestitoDaModificare) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/librarymanager/PrestitoView.fxml"));
-            Parent root = loader.load();
-            FormPrestitoController controller = loader.getController();
 
-            controller.init(gestoreLibro, gestoreUtente, gestorePrestito);
+            loader.setControllerFactory(classeRichiesta -> {
+                if (classeRichiesta == FormPrestitoController.class) {
+                    return new FormPrestitoController(gestorePrestito, gestoreLibro, gestoreUtente, new DialogServiceJavaFX());
+                }
+
+                throw new RuntimeException();
+            });
+
+            Parent root = loader.load();
+
+            FormController<Prestito> controller = loader.getController();
 
             if (prestitoDaModificare == null) {
                 controller.setFormOnAggiungi();

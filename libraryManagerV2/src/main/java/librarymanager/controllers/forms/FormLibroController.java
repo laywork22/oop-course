@@ -9,12 +9,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import librarymanager.alert.DialogService;
+import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.managers.GestoreLibro;
 import librarymanager.models.Libro;
 import librarymanager.validators.formvalidators.FormValidator;
 
-public class FormLibroController {
+public class FormLibroController implements FormController<Libro> {
     private GestoreLibro gestoreLibro;
     private FormValidator formValidator;
     private DialogService ds;
@@ -100,6 +101,7 @@ public class FormLibroController {
         stage.close();
     }
 
+    @Override
     public void setFormOnAggiungi() {
         titoloFld.clear();
         autoreFld.clear();
@@ -113,6 +115,7 @@ public class FormLibroController {
         isbnFld.setDisable(false);
     }
 
+    @Override
     public void setFormOnModifica(Libro libro) {
         titoloFld.setText(libro.getTitolo());
         autoreFld.setText(libro.getAutori());
@@ -126,6 +129,7 @@ public class FormLibroController {
         insModLbl.setText("Modifica Libro");
     }
 
+    @Override
     public void setOnSaveAction(Callback<Libro, Boolean> onSaveAction) {
         this.onSaveAction = onSaveAction;
     }

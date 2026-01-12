@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import librarymanager.alert.DialogService;
+import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.managers.GestoreLibro;
 import librarymanager.managers.GestorePrestito;
@@ -21,10 +22,11 @@ import librarymanager.validators.formvalidators.FormValidator;
 
 import java.time.LocalDate;
 
-public class FormPrestitoController {
-    private GestorePrestito gestorePrestito;
-    private GestoreUtente gestoreUtente;
-    private GestoreLibro gestoreLibro;
+public class FormPrestitoController implements FormController<Prestito> {
+
+    private final GestorePrestito gestorePrestito;
+    private final GestoreUtente gestoreUtente;
+    private final GestoreLibro gestoreLibro;
 
     private FormValidator formValidator;
     private DialogService ds;
@@ -45,6 +47,14 @@ public class FormPrestitoController {
     @javafx.fxml.FXML
     private Button annullaBtn;
 
+    public FormPrestitoController(GestorePrestito gestorePrestito, GestoreLibro gestoreLibro, GestoreUtente gestoreUtente, DialogService ds) {
+        this.gestoreLibro = gestoreLibro;
+        this.gestorePrestito = gestorePrestito;
+        this.gestoreUtente = gestoreUtente;
+
+        this.ds = ds;
+    }
+
     @FXML
     public void initialize() {
         this.formValidator = () -> {
@@ -57,16 +67,16 @@ public class FormPrestitoController {
             return utenteMancante || libroMancante || dataInizioMancante || dataScadenzaMancante;
         };
 
-        this.ds = new DialogServiceJavaFX();
+        setComboBox();
 
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void annullaNuovoPrestito(ActionEvent actionEvent) {
         chiudiFinestra();
     }
 
-    @javafx.fxml.FXML
+    @FXML
     public void salvaNuovoPrestito(ActionEvent actionEvent) {
 
         if (formValidator.isInvalid()) {
@@ -99,6 +109,7 @@ public class FormPrestitoController {
         stage.close();
     }
 
+    @Override
     public void setFormOnAggiungi() {
         utentiCb.setValue(null);
         libroCb.setValue(null);
@@ -111,6 +122,7 @@ public class FormPrestitoController {
         salvaBtn.setText("Aggiungi");
     }
 
+    @Override
     public void setFormOnModifica(Prestito prestito) {
         utentiCb.setValue(prestito.getUtente());
         libroCb.setValue(prestito.getLibro());
@@ -126,17 +138,11 @@ public class FormPrestitoController {
         insModFld.setText("Modifica Libro");
     }
 
+    @Override
     public void setOnSaveAction(Callback<Prestito, Boolean> onSaveAction) {
         this.onSaveAction = onSaveAction;
     }
 
-    public void init(GestoreLibro gestoreLibro, GestoreUtente gestoreUtente, GestorePrestito gestorePrestito) {
-        this.gestoreLibro = gestoreLibro;
-        this.gestoreUtente = gestoreUtente;
-        this.gestorePrestito = gestorePrestito;
-
-        setComboBox();
-    }
 
     private void setComboBox() {
         FilteredList<Utente> utentiFiltrati = new FilteredList<>(FXCollections.observableArrayList(gestoreUtente.getLista()),
@@ -165,6 +171,7 @@ public class FormPrestitoController {
             }
 
         });
+
         libroCb.setConverter(new StringConverter<>() {
             @Override
             public String toString(Libro l) {
