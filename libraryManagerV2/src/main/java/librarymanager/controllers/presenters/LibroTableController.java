@@ -122,7 +122,7 @@ public class LibroTableController implements AreaEditablePresenter {
      * @details Apre la finestra modale 'LibroView.fxml' popolata con i dati del libro selezionato.
      * @pre Un libro deve essere attualmente selezionato nella tabella (tabellaLibri.getSelectionModel().getSelectedItem() != null).
      * @post Se l'utente conferma le modifiche, il libro nel GestoreLibro viene aggiornato.
-     * @post La tabella riflette immediatamente le modifiche apportate (es. cambio titolo o copie).
+     * @post La tabella riflette immediatamente le modifiche apportate (es. Cambio titolo o copie).
      * @note Se nessun libro è selezionato, viene mostrato un avviso all'utente.
      */
     @Override
@@ -200,7 +200,7 @@ public class LibroTableController implements AreaEditablePresenter {
      * @pre Il libro selezionato non deve avere copie attualmente in prestito (vincolo verificato dal GestoreLibro).
      * @post Se confermato e le pre-condizioni del Gestore sono soddisfatte, lo stato del libro diventa ARCHIVIATO.
      * @post Il libro rimosso non viene più visualizzato nella lista attiva (se il filtro lo esclude) o il suo stato visivo cambia.
-     * @throws Mostra un messaggio di errore se il GestoreLibro solleva eccezioni (es. copie in prestito).
+     * @throws librarymanager.exceptions.LibroException Mostra un messaggio di errore se il GestoreLibro solleva eccezioni (es. copie in prestito).
      */
     @Override
     public void onRimuovi() {

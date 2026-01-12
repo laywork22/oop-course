@@ -221,7 +221,6 @@ public class PrestitoTableController implements AreaEditablePresenter {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
             ds.mostraErrore("Impossibile aprire il form: " + e.getMessage());
         }
     }
@@ -298,7 +297,7 @@ public class PrestitoTableController implements AreaEditablePresenter {
 
     /**
      * @brief Ordina i prestiti.
-     * @param criterio Criterio scelto (es. per Data Inizio o per Cognome Utente).
+     * @param criterio Criterio scelto (es. Per Data Inizio o per Cognome Utente).
      * @post La tabella viene riordinata.
      */
     @Override
