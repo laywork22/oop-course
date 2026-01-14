@@ -15,22 +15,26 @@ public class Main {
 
         Thread t3 = new Thread(check);
 
-        t3.start();
-
         t1.setName("GuadagnaGuadagna");
         t2.setName("SpendiSpendi");
 
+        t3.start();
         t1.start();
-        t1.join();
-
-
         t2.start();
+
 
         Thread.sleep(10000);
 
 
-        //t1.interrupt();
+        t1.interrupt();
         t2.interrupt();
         t3.interrupt();
+
+
+        t1.join();
+        t2.join();
+        t3.join();
+
+        System.out.println("Esecuzione terminata. Saldo finale: " + c.getSaldo());
     }
 }
