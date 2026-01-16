@@ -3,8 +3,8 @@ package threadSafe;
 import java.util.Random;
 
 public class Producer implements Runnable {
-    private int periodo;
-    private Buffer<String> buffer;
+    private final int periodo;
+    private final Buffer<String> buffer;
 
 
     public Producer(Buffer<String> buffer, int periodo) {
