@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RegistroPrestiti implements Registro<Integer, Prestito>, Refreshable {
+public class RegistroPrestiti implements Registro<Integer, Prestito>, RefreshableState {
     private Map<Integer, Prestito> mappaPrestiti;
 
     public RegistroPrestiti() {

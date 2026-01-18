@@ -20,7 +20,6 @@ import librarymanager.models.Libro;
 import librarymanager.models.Prestito;
 import librarymanager.models.Utente;
 import librarymanager.persistence.Archiviabile;
-import librarymanager.persistence.ArchivioCsvIO;
 import librarymanager.persistence.ArchivioIO;
 
 import java.io.File;
@@ -113,8 +112,8 @@ public class PrimaryController {
             if (areaCorrente != null  && areaCorrente instanceof Editable) ((Editable)areaCorrente).onRimuovi();
         });
 
-        if (areaCorrente instanceof Refreshable)
-            ((Refreshable) areaCorrente).aggiornaStati();
+        if (areaCorrente instanceof RefreshableState)
+            ((RefreshableState) areaCorrente).aggiornaStati();
 
         setAreaPrestiti(null);
 
@@ -179,8 +178,8 @@ public class PrimaryController {
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
-        if (gestoreCorrente instanceof Refreshable)
-            ((Refreshable) gestoreCorrente).aggiornaStati();
+        if (gestoreCorrente instanceof RefreshableState)
+            ((RefreshableState) gestoreCorrente).aggiornaStati();
 
         areaCorrente.ricarica();
         toggleMenu(actionEvent);
@@ -196,8 +195,8 @@ public class PrimaryController {
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
-        if (gestoreCorrente instanceof Refreshable)
-            ((Refreshable) gestoreCorrente).aggiornaStati();
+        if (gestoreCorrente instanceof RefreshableState)
+            ((RefreshableState) gestoreCorrente).aggiornaStati();
 
         areaCorrente.ricarica();
         toggleMenu(actionEvent);
@@ -213,8 +212,8 @@ public class PrimaryController {
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
-        if (gestoreCorrente instanceof Refreshable)
-            ((Refreshable) gestoreCorrente).aggiornaStati();
+        if (gestoreCorrente instanceof RefreshableState)
+            ((RefreshableState) gestoreCorrente).aggiornaStati();
 
         areaCorrente.ricarica();
         toggleMenu(actionEvent);

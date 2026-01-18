@@ -1,5 +1,5 @@
 package librarymanager.managers;
 
-public interface Refreshable {
+public interface RefreshableState {
     void aggiornaStati();
 }
