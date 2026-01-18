@@ -1,10 +1,7 @@
 package librarymanager.managers;
 
 import librarymanager.exceptions.PrestitoException;
-import librarymanager.models.Prestito;
-import librarymanager.models.StatoLibro;
-import librarymanager.models.StatoPrestito;
-import librarymanager.models.StatoUtente;
+import librarymanager.models.*;
 import librarymanager.validators.modelvalidator.PrestitoValidator;
 
 import java.time.LocalDate;
@@ -13,14 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GestorePrestito implements Gestore<Integer, Prestito> {
+public class RegistroPrestiti implements Registro<Integer, Prestito>, Refreshable {
     private Map<Integer, Prestito> mappaPrestiti;
 
-    public GestorePrestito() {
+    public RegistroPrestiti() {
         this.mappaPrestiti = new HashMap<>();
     }
 
-    public GestorePrestito(Map<Integer, Prestito> mappaPrestiti) {
+    public RegistroPrestiti(Map<Integer, Prestito> mappaPrestiti) {
         this.mappaPrestiti = mappaPrestiti;
     }
 
@@ -36,11 +33,11 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
         }
 
 
-        if (elem.getLibro().getStato() != StatoLibro.IN_ARCHIVIO) {
+        if (elem.getLibro().getStato() != Libro.StatoLibro.IN_ARCHIVIO) {
             throw new PrestitoException("Il libro risulta non attivo");
         }
 
-        if (elem.getUtente().getStato() != StatoUtente.IN_ARCHIVIO) {
+        if (elem.getUtente().getStato() != Utente.StatoUtente.IN_ARCHIVIO) {
             throw new PrestitoException("L'utente risulta non attivo");
         }
 
@@ -64,11 +61,11 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
         p.setDataFineEffettiva(LocalDate.now());
 
 
-        if (p.getStato() == StatoPrestito.ATTIVO  || p.getStato() == StatoPrestito.IN_SCADENZA) {
-            p.setStato(StatoPrestito.CHIUSO);
+        if (p.getStato() == Prestito.StatoPrestito.ATTIVO  || p.getStato() == Prestito.StatoPrestito.IN_SCADENZA) {
+            p.setStato(Prestito.StatoPrestito.CHIUSO);
         }
         else if (LocalDate.now().isAfter(p.getDataFinePrestabilita())) {
-            p.setStato(StatoPrestito.CHIUSO_IN_RITARDO);
+            p.setStato(Prestito.StatoPrestito.CHIUSO_IN_RITARDO);
         }
 
 
@@ -96,8 +93,8 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
             return;
         }
 
-        if (prestitoDaModificare.getStato() == StatoPrestito.CHIUSO ||
-                prestitoDaModificare.getStato() == StatoPrestito.CHIUSO_IN_RITARDO) {
+        if (prestitoDaModificare.getStato() == Prestito.StatoPrestito.CHIUSO ||
+                prestitoDaModificare.getStato() == Prestito.StatoPrestito.CHIUSO_IN_RITARDO) {
             throw new PrestitoException("Impossibile modificare un prestito già concluso.");
         }
 
@@ -139,23 +136,24 @@ public class GestorePrestito implements Gestore<Integer, Prestito> {
         return new ArrayList<>(mappaPrestiti.values());
     }
 
+    @Override
     public void aggiornaStati() {
         LocalDate oggi = LocalDate.now();
 
         for (Prestito p : mappaPrestiti.values()) {
             if (p.getDataFineEffettiva() != null) {
                 if (p.getDataFineEffettiva().isAfter(p.getDataFinePrestabilita())) {
-                    p.setStato(StatoPrestito.CHIUSO_IN_RITARDO);
+                    p.setStato(Prestito.StatoPrestito.CHIUSO_IN_RITARDO);
                 } else {
-                    p.setStato(StatoPrestito.CHIUSO);
+                    p.setStato(Prestito.StatoPrestito.CHIUSO);
                 }
                 continue;
             }
 
             if (p.getDataFinePrestabilita().isBefore(oggi)) {
-                p.setStato(StatoPrestito.CHIUSO_IN_RITARDO);
+                p.setStato(Prestito.StatoPrestito.CHIUSO_IN_RITARDO);
             } else {
-                p.setStato(StatoPrestito.ATTIVO);
+                p.setStato(Prestito.StatoPrestito.ATTIVO);
             }
         }
     }

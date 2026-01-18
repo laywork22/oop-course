@@ -1,7 +1,6 @@
 package librarymanager.managers;
 
 import librarymanager.exceptions.UtenteException;
-import librarymanager.models.StatoUtente;
 import librarymanager.models.Utente;
 import librarymanager.validators.modelvalidator.UtenteValidator;
 
@@ -10,14 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GestoreUtente implements Gestore<String, Utente> {
+public class RegistroUtenti implements Registro<String, Utente> {
     private Map<String, Utente> mappaUtenti;
 
-    public GestoreUtente() {
+    public RegistroUtenti() {
         this.mappaUtenti = new HashMap<>();
     }
 
-    public GestoreUtente(Map<String, Utente> mappaUtenti) {
+    public RegistroUtenti(Map<String, Utente> mappaUtenti) {
         this.mappaUtenti = mappaUtenti;
     }
 
@@ -39,8 +38,8 @@ public class GestoreUtente implements Gestore<String, Utente> {
             mappaUtenti.put(elem.getMatricola(),elem);
         }
         else {
-            if (utenteEsistente.getStato() == StatoUtente.ARCHIVIATO) {
-                utenteEsistente.setStato(StatoUtente.IN_ARCHIVIO);
+            if (utenteEsistente.getStato() == Utente.StatoUtente.ARCHIVIATO) {
+                utenteEsistente.setStato(Utente.StatoUtente.IN_ARCHIVIO);
 
                 utenteEsistente.setNome(elem.getNome());
                 utenteEsistente.setCognome(elem.getCognome());
@@ -63,12 +62,12 @@ public class GestoreUtente implements Gestore<String, Utente> {
             throw new UtenteException("UtenteException: impossibile rimuovere l'utente, non è presente nell'archivio");
         }
 
-        if (utenteDaRimuovere.getStato() == StatoUtente.ARCHIVIATO) {
+        if (utenteDaRimuovere.getStato() == Utente.StatoUtente.ARCHIVIATO) {
             throw new UtenteException("UtenteException: L'utente è già stato archiviato. Impossibile rimuovere.");
         }
 
         if (utenteDaRimuovere.getPrestitiAttivi() == 0) {
-            utenteDaRimuovere.setStato(StatoUtente.ARCHIVIATO);
+            utenteDaRimuovere.setStato(Utente.StatoUtente.ARCHIVIATO);
         }
         else {
             throw new UtenteException("UtenteException: L'utente ha ancora copie in prestito");
@@ -87,7 +86,7 @@ public class GestoreUtente implements Gestore<String, Utente> {
      * @post vecchio aggiornato con i valori di nuovo (Nome, Cognome, Email)
      * @post utentiList.size() invariata
      *
-     * @throws
+     * @throws UtenteException
      */
     @Override
     public void modifica(Utente vecchio, Utente nuovo) throws UtenteException {
@@ -102,7 +101,7 @@ public class GestoreUtente implements Gestore<String, Utente> {
             throw new UtenteException("UtenteException: Utente originale non esistente");
         }
 
-        if (utenteDaModificare.getStato() == StatoUtente.ARCHIVIATO) {
+        if (utenteDaModificare.getStato() == Utente.StatoUtente.ARCHIVIATO) {
             throw new UtenteException("UtenteException: l'utente non è in archivio");
         }
 

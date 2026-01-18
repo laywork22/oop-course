@@ -2,7 +2,6 @@ package librarymanager.managers;
 
 import librarymanager.exceptions.LibroException;
 import librarymanager.models.Libro;
-import librarymanager.models.StatoLibro;
 import librarymanager.validators.modelvalidator.LibroValidator;
 
 import java.util.ArrayList;
@@ -10,14 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GestoreLibro implements Gestore<String, Libro>{
+public class RegistroLibri implements Registro<String, Libro>{
     private Map<String, Libro> mappaLibri;
 
-    public GestoreLibro() {
+    public RegistroLibri() {
         this.mappaLibri = new HashMap<>();
     }
 
-    public GestoreLibro(Map<String, Libro> listaLibri) {
+    public RegistroLibri(Map<String, Libro> listaLibri) {
         this.mappaLibri = listaLibri;
     }
 
@@ -39,8 +38,8 @@ public class GestoreLibro implements Gestore<String, Libro>{
             mappaLibri.put(elem.getIsbn(), elem);
         }
         else {
-            if (libroEsistente.getStato() == StatoLibro.ARCHIVIATO) {
-                libroEsistente.setStato(StatoLibro.IN_ARCHIVIO);
+            if (libroEsistente.getStato() == Libro.StatoLibro.ARCHIVIATO) {
+                libroEsistente.setStato(Libro.StatoLibro.IN_ARCHIVIO);
             }
             else {
                 libroEsistente.setCopieTotali(libroEsistente.getCopieTotali() + elem.getCopieTotali());
@@ -59,7 +58,7 @@ public class GestoreLibro implements Gestore<String, Libro>{
 
         }
 
-        if (libroDaRimuovere.getStato() == StatoLibro.ARCHIVIATO) {
+        if (libroDaRimuovere.getStato() == Libro.StatoLibro.ARCHIVIATO) {
             throw new LibroException("LibroException: Il libro è già stato archiviato. Impossibile rimuovere.");
         }
 
@@ -67,7 +66,7 @@ public class GestoreLibro implements Gestore<String, Libro>{
             throw new LibroException("LibroException: Il libro ha ancora copie in prestito");
         }
 
-        libroDaRimuovere.setStato(StatoLibro.ARCHIVIATO);
+        libroDaRimuovere.setStato(Libro.StatoLibro.ARCHIVIATO);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class GestoreLibro implements Gestore<String, Libro>{
             throw new LibroException("LibroException: Libro originale non trovato");
         }
 
-        if (libroDaModificare.getStato() == StatoLibro.ARCHIVIATO) {
+        if (libroDaModificare.getStato() == Libro.StatoLibro.ARCHIVIATO) {
             throw new LibroException("LibroException: Il libro non è attivo. Impossibile modificare");
 
         }

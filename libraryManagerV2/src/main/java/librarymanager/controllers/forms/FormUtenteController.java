@@ -10,12 +10,12 @@ import javafx.util.Callback;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.managers.GestoreUtente;
+import librarymanager.managers.RegistroUtenti;
 import librarymanager.models.Utente;
 import librarymanager.validators.formvalidators.FormValidator;
 
 public class FormUtenteController implements FormController<Utente> {
-    private GestoreUtente gestoreUtente;
+    private RegistroUtenti gestoreUtente;
     private FormValidator formValidator;
     private DialogService ds;
     private Callback<Utente, Boolean> onSaveAction;

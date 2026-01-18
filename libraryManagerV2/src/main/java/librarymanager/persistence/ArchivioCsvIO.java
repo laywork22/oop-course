@@ -1,4 +1,4 @@
-package librarymanager.managers;
+package librarymanager.persistence;
 
 import librarymanager.models.*;
 
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestoreArchivio {
+public class ArchivioCsvIO implements ArchivioIO<Archiviabile> {
     private void salvaLibriCSV(ArchivioDati archivio, File nomefile) {
         try(PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(nomefile)))) {
             pw.println("TITOLO;AUTORE;ANNO;ISBN;COPIE TOTALI;COPIE DISPONIBILI;STATO");
@@ -78,7 +78,7 @@ public class GestoreArchivio {
      * @param archivio
      * @param directory
      */
-    public void salvaArchivioCSV(ArchivioDati archivio, File directory) {
+    private void salvaArchivioCSV(ArchivioDati archivio, File directory) {
         if (!directory.exists()) directory.mkdirs();
 
         File fileLibri = new File(directory, "libri.csv");
@@ -104,7 +104,7 @@ public class GestoreArchivio {
 
                 Libro l = new Libro(campi[0], campi[1], Integer.parseInt(campi[2]), campi[3], Integer.parseInt(campi[4]));
                 l.setCopieDisponibili(Integer.parseInt(campi[5]));
-                l.setStato(StatoLibro.valueOf(campi[6]));
+                l.setStato(Libro.StatoLibro.valueOf(campi[6]));
                 listaLibri.add(l);
             }
         } catch (FileNotFoundException e) {
@@ -130,7 +130,7 @@ public class GestoreArchivio {
                 Utente u = new Utente(campi[0], campi[1], campi[2], campi[3]);
 
                 u.setPrestitiAttivi(Integer.parseInt(campi[4]));
-                u.setStato(StatoUtente.valueOf(campi[5]));
+                u.setStato(Utente.StatoUtente.valueOf(campi[5]));
 
                 listaUtenti.add(u);
             }
@@ -183,7 +183,7 @@ public class GestoreArchivio {
                 if (campi[9] != null && !campi[9].isEmpty() && !campi[9].equals("null")) {
                     p.setDataFineEffettiva(LocalDate.parse(campi[9]));
                 }
-                p.setStato(StatoPrestito.valueOf(campi[10]));
+                p.setStato(Prestito.StatoPrestito.valueOf(campi[10]));
 
                 listaPrestiti.add(p);
             }
@@ -196,7 +196,7 @@ public class GestoreArchivio {
         return listaPrestiti;
     }
 
-    public ArchivioDati caricaArchivioCSV(File directory) {
+    private ArchivioDati caricaArchivioCSV(File directory) {
         if (!directory.exists())  return  null;
 
         File fileLibri = new File(directory, "libri.csv");
@@ -214,5 +214,17 @@ public class GestoreArchivio {
         ArchivioDati ad = new ArchivioDati(libri, utenti, prestiti);
 
         return ad;
+    }
+
+    @Override
+    public void scriviArchivio(Archiviabile data, String filename) {
+        File directory = new File(filename);
+        salvaArchivioCSV((ArchivioDati) data, directory);
+    }
+
+    @Override
+    public ArchivioDati leggiArchivio(String filename) {
+        File directory = new File(filename);
+        return caricaArchivioCSV(directory);
     }
 }

@@ -17,9 +17,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.controllers.forms.FormUtenteController;
-import librarymanager.managers.GestoreUtente;
-import librarymanager.models.StatoUtente;
+import librarymanager.managers.Registro;
+import librarymanager.managers.RegistroUtenti;
 import librarymanager.models.Utente;
 
 import java.io.IOException;
@@ -29,13 +28,13 @@ import java.util.*;
 /**
  * @class UtenteTableController
  * @brief Controller per la gestione della vista tabellare degli utenti.
- * @details Gestisce l'interazione tra la UI e il GestoreUtente, permettendo operazioni CRUD sugli utenti.
- * * @invariant 'tabellaUtenti' deve visualizzare in modo consistente gli utenti gestiti da GestoreUtente.
+ * @details Gestisce l'interazione tra la UI e il RegistroUtenti, permettendo operazioni CRUD sugli utenti.
+ * * @invariant 'tabellaUtenti' deve visualizzare in modo consistente gli utenti gestiti da RegistroUtenti.
  * @invariant Il numero di prestiti attivi visualizzato per ogni utente deve corrispondere allo stato reale nel sistema.
  * @invariant 'listaOrdinata' è sempre sincronizzata con i filtri applicati su 'listaFiltrata'.
  */
 public class UtenteTableController implements AreaEditablePresenter {
-    private GestoreUtente gestoreUtente;
+    private Registro<String, Utente> gestoreUtente;
     private Map<String, Comparator<Utente>> mappaOrdinamento;
 
     private ObservableList<Utente> lista;
@@ -59,9 +58,9 @@ public class UtenteTableController implements AreaEditablePresenter {
     @javafx.fxml.FXML
     private TableColumn<Utente, String> nomeClm;
     @javafx.fxml.FXML
-    private TableColumn<Utente, StatoUtente> statoClm;
+    private TableColumn<Utente, Utente.StatoUtente> statoClm;
 
-    public UtenteTableController(GestoreUtente gestoreUtente) {
+    public UtenteTableController(Registro<String,Utente> gestoreUtente) {
         this.gestoreUtente = gestoreUtente;
 
         this.ds = new DialogServiceJavaFX();
@@ -77,7 +76,7 @@ public class UtenteTableController implements AreaEditablePresenter {
     /**
      * @brief Inizializza la tabella utenti.
      * @details Collega le colonne (Nome, Cognome, Matricola, Email, Prestiti, Stato) alle proprietà dell'oggetto Utente.
-     * @post La tabella è pronta e popolata con la lista degli utenti fornita dal GestoreUtente.
+     * @post La tabella è pronta e popolata con la lista degli utenti fornita dal RegistroUtenti.
      */
     @FXML
     public void initialize() {
@@ -211,7 +210,7 @@ public class UtenteTableController implements AreaEditablePresenter {
 
     /**
      * @brief Sincronizza la vista con il modello dati.
-     * @post I dati visualizzati corrispondono esattamente allo stato attuale del GestoreUtente.
+     * @post I dati visualizzati corrispondono esattamente allo stato attuale del RegistroUtenti.
      */
     @Override
     public void ricarica() {

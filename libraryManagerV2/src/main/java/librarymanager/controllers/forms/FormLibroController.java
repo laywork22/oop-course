@@ -11,12 +11,12 @@ import javafx.util.Callback;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.managers.GestoreLibro;
+import librarymanager.managers.Registro;
 import librarymanager.models.Libro;
 import librarymanager.validators.formvalidators.FormValidator;
 
 public class FormLibroController implements FormController<Libro> {
-    private GestoreLibro gestoreLibro;
+    private Registro<String, Libro> gestoreLibro;
     private FormValidator formValidator;
     private DialogService ds;
     private Callback<Libro, Boolean> onSaveAction;

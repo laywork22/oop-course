@@ -12,6 +12,12 @@ public class Libro implements Comparable<Libro> {
     private int copieDisponibili;
     private StatoLibro stato;
 
+    public static enum StatoLibro {
+        IN_ARCHIVIO,
+        ARCHIVIATO
+    }
+
+
     public Libro(String titolo, String autori, int anno, String isbn, int copieTotali) {
         this.titolo = titolo;
         this.autori = autori;

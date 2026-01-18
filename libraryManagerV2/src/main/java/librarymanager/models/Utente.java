@@ -10,6 +10,11 @@ public class Utente implements Comparable<Utente> {
     private int prestitiAttivi;
     private StatoUtente stato;
 
+    public static enum StatoUtente {
+        IN_ARCHIVIO,
+        ARCHIVIATO
+    }
+
     public Utente(String nome, String cognome, String email, String matricola) {
         this.nome = nome;
         this.cognome = cognome;

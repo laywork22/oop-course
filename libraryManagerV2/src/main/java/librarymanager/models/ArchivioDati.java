@@ -1,13 +1,9 @@
 package librarymanager.models;
 
-import librarymanager.managers.Gestore;
-import librarymanager.managers.GestoreLibro;
-
-import java.util.ArrayList;
+import librarymanager.persistence.Archiviabile;
 import java.util.List;
-import java.util.Map;
 
-public class ArchivioDati {
+public class ArchivioDati implements Archiviabile {
     private List<Libro> listaLibri;
     private List<Utente> listaUtenti;
     private List<Prestito> listaPrestiti;

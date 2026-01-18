@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 import librarymanager.controllers.PrimaryController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.managers.*;
+import librarymanager.models.Libro;
+import librarymanager.models.Prestito;
+import librarymanager.models.Utente;
+import librarymanager.persistence.ArchivioCsvIO;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,7 +40,7 @@ public class LibraryManager extends Application {
 
         fxmlLoader.setControllerFactory(classeRichiesta ->  {
             if (classeRichiesta == PrimaryController.class) {
-                return new PrimaryController(initMappaGestori(), new GestoreArchivio(), new DialogServiceJavaFX());
+                return new PrimaryController(initMappaGestori(), new ArchivioCsvIO(), new DialogServiceJavaFX());
             }
 
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
@@ -45,12 +49,12 @@ public class LibraryManager extends Application {
         return fxmlLoader.load();
     }
 
-    private Map<Class<?>, Gestore<?, ?>> initMappaGestori() {
-        Map<Class<?>, Gestore<?, ?>> mappaGestori = new HashMap<>();
+    private Map<Class<?>, Registro<?, ?>> initMappaGestori() {
+        Map<Class<?>, Registro<?, ?>> mappaGestori = new HashMap<>();
 
-        mappaGestori.put(GestoreLibro.class, new GestoreLibro());
-        mappaGestori.put(GestoreUtente.class, new GestoreUtente());
-        mappaGestori.put(GestorePrestito.class, new GestorePrestito());
+        mappaGestori.put(RegistroLibri.class, (Registro<String, Libro>) new RegistroLibri());
+        mappaGestori.put(RegistroUtenti.class, (Registro<String, Utente>) new RegistroUtenti());
+        mappaGestori.put(RegistroPrestiti.class,(Registro<Integer, Prestito>) new RegistroPrestiti());
 
         return mappaGestori;
     }

@@ -19,25 +19,25 @@ import librarymanager.models.ArchivioDati;
 import librarymanager.models.Libro;
 import librarymanager.models.Prestito;
 import librarymanager.models.Utente;
+import librarymanager.persistence.Archiviabile;
+import librarymanager.persistence.ArchivioCsvIO;
+import librarymanager.persistence.ArchivioIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PrimaryController {
-    private Map<Class<?>, Gestore<?, ?>> mappaGestori;
-    private GestoreLibro gestoreLibro;
-    private GestorePrestito gestorePrestito;
-    private GestoreUtente gestoreUtente;
+    private Map<Class<?>, Registro<?, ?>> mappaRegistri;
 
-    private GestoreArchivio gestoreArchivio;
+    private ArchivioIO<Archiviabile> archivioCsvIO;
     private File directoryCorrente;
 
-    private Gestore<?, ?>  gestoreCorrente;
+    private Registro<?, ?>  gestoreCorrente;
 
     private AreaPresenter areaCorrente;
-
     private DialogService ds;
 
     private boolean menuVisible = false;
@@ -77,17 +77,13 @@ public class PrimaryController {
 
     public PrimaryController() {}
 
-    public PrimaryController(Map<Class<?>, Gestore<?, ?>> mappaGestori, GestoreArchivio gestoreArchivio, DialogService ds) {
+    public PrimaryController(Map<Class<?>, Registro<?, ?>> mappaRegistri, ArchivioIO<Archiviabile> archivio, DialogService ds) {
         this.ds = ds;
-        this.mappaGestori = mappaGestori;
+        this.mappaRegistri = mappaRegistri;
 
-        this.gestoreArchivio = gestoreArchivio;
+        this.archivioCsvIO = archivio;
 
-        this.gestoreLibro = (GestoreLibro) mappaGestori.get(GestoreLibro.class);
-        this.gestorePrestito = (GestorePrestito) mappaGestori.get(GestorePrestito.class);
-        this.gestoreUtente = (GestoreUtente) mappaGestori.get(GestoreUtente.class);
-
-        if (gestoreLibro == null || gestorePrestito == null || gestoreUtente == null) {
+        if (mappaRegistri.get(RegistroLibri.class) == null || mappaRegistri.get(RegistroPrestiti.class) == null || mappaRegistri.get(RegistroUtenti.class) == null) {
             throw new IllegalStateException("Uno o più gestori non sono stati inizializzati correttamente nella mappa.");
         }
     }
@@ -95,7 +91,7 @@ public class PrimaryController {
 
     @FXML
     public void initialize() {
-        gestoreCorrente = gestorePrestito;
+        gestoreCorrente = mappaRegistri.get(RegistroPrestiti.class);
 
         sideMenu.setTranslateX(-200);
 
@@ -117,7 +113,8 @@ public class PrimaryController {
             if (areaCorrente != null  && areaCorrente instanceof Editable) ((Editable)areaCorrente).onRimuovi();
         });
 
-        gestorePrestito.aggiornaStati();
+        if (areaCorrente instanceof Refreshable)
+            ((Refreshable) areaCorrente).aggiornaStati();
 
         setAreaPrestiti(null);
 
@@ -131,9 +128,9 @@ public class PrimaryController {
     public void salvaFile(ActionEvent actionEvent) {
         if (directoryCorrente != null) {
 
-            ArchivioDati archivio = new ArchivioDati(gestoreLibro.getLista(), gestoreUtente.getLista(), gestorePrestito.getLista());
+            ArchivioDati archivio = new ArchivioDati((List<Libro>) mappaRegistri.get(RegistroLibri.class).getLista(), (List<Utente>) mappaRegistri.get(RegistroUtenti.class).getLista(), (List<Prestito>) mappaRegistri.get(RegistroPrestiti.class).getLista());
 
-            gestoreArchivio.salvaArchivioCSV(archivio, directoryCorrente);
+            archivioCsvIO.scriviArchivio(archivio, directoryCorrente.getPath());
 
             ds.mostraInfo( "Salvato in " + directoryCorrente.getName());
         } else {
@@ -154,11 +151,11 @@ public class PrimaryController {
         File directory = directoryChooser.showDialog(window);
 
 
-        ArchivioDati ad = new ArchivioDati(gestoreLibro.getLista(), gestoreUtente.getLista(), gestorePrestito.getLista());
+        Archiviabile ad = new ArchivioDati((List<Libro>) mappaRegistri.get(RegistroLibri.class).getLista(), (List<Utente>) mappaRegistri.get(RegistroUtenti.class).getLista(), (List<Prestito>) mappaRegistri.get(RegistroPrestiti.class).getLista());
 
         try {
             if (directory != null) {
-                gestoreArchivio.salvaArchivioCSV(ad, directory);
+                archivioCsvIO.scriviArchivio(ad, directory.getPath());
                 directoryCorrente = directory;
                 ds.mostraInfo( "Salvataggio completato: " + "Dati salvati nella cartella " + directory.getName());
             }
@@ -172,24 +169,35 @@ public class PrimaryController {
 
     @FXML
     public void setAreaPrestiti(ActionEvent actionEvent) {
+        this.gestoreCorrente = getRegistro(RegistroPrestiti.class);
+
         caricaVista("/librarymanager/TabellaPrestitoView.fxml", "Area Prestiti", classeRichiesta -> {
-            if (classeRichiesta == PrestitoTableController.class) return new PrestitoTableController( gestorePrestito, gestoreLibro, gestoreUtente);
+            if (classeRichiesta == PrestitoTableController.class) return new PrestitoTableController((RegistroPrestiti) mappaRegistri.get(RegistroPrestiti.class),
+                    (RegistroLibri) mappaRegistri.get(RegistroLibri.class),
+                    (RegistroUtenti) mappaRegistri.get(RegistroUtenti.class));
 
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
-        gestorePrestito.aggiornaStati();
+        if (gestoreCorrente instanceof Refreshable)
+            ((Refreshable) gestoreCorrente).aggiornaStati();
 
+        areaCorrente.ricarica();
         toggleMenu(actionEvent);
     }
 
     @FXML
     public void setAreaLibri(ActionEvent actionEvent) {
+        this.gestoreCorrente = getRegistro(RegistroLibri.class);
+
         caricaVista("/librarymanager/TabellaLibroView.fxml", "Area Libri", classeRichiesta -> {
-            if (classeRichiesta == LibroTableController.class) return new LibroTableController(gestoreLibro);
+            if (classeRichiesta == LibroTableController.class) return new LibroTableController((RegistroLibri) mappaRegistri.get(RegistroLibri.class));
 
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
+
+        if (gestoreCorrente instanceof Refreshable)
+            ((Refreshable) gestoreCorrente).aggiornaStati();
 
         areaCorrente.ricarica();
         toggleMenu(actionEvent);
@@ -197,14 +205,18 @@ public class PrimaryController {
 
     @FXML
     public void setAreaUtenti(ActionEvent actionEvent) {
+        this.gestoreCorrente = getRegistro(RegistroUtenti.class);
+
         caricaVista("/librarymanager/TabellaUtenteView.fxml", "Area Utente", classeRichiesta -> {
-            if (classeRichiesta == UtenteTableController.class) return new UtenteTableController(gestoreUtente);
+            if (classeRichiesta == UtenteTableController.class) return new UtenteTableController((RegistroUtenti) mappaRegistri.get(RegistroUtenti.class));
 
             throw new IllegalArgumentException("Controller non atteso " + classeRichiesta);
         });
 
-        areaCorrente.ricarica();
+        if (gestoreCorrente instanceof Refreshable)
+            ((Refreshable) gestoreCorrente).aggiornaStati();
 
+        areaCorrente.ricarica();
         toggleMenu(actionEvent);
     }
 
@@ -280,15 +292,18 @@ public class PrimaryController {
 
         try {
             if (cartellaSelezionata != null) {
-                ArchivioDati ad = gestoreArchivio.caricaArchivioCSV(cartellaSelezionata);
+                ArchivioDati ad = (ArchivioDati) archivioCsvIO.leggiArchivio(cartellaSelezionata.getPath());
 
-                gestoreLibro.setMappa(ad.getListaLibri().stream()
+                Registro<String, Libro> regLibri = getRegistro(RegistroLibri.class);
+                regLibri.setMappa(ad.getListaLibri().stream()
                         .collect(Collectors.toMap(Libro::getIsbn, libro -> libro)));
 
-                gestoreUtente.setMappa(ad.getListaUtenti().stream()
+                Registro<String, Utente> regUtenti = getRegistro(RegistroUtenti.class);
+                regUtenti.setMappa(ad.getListaUtenti().stream()
                         .collect(Collectors.toMap(Utente::getMatricola, utente -> utente)));
 
-                gestorePrestito.setMappa(ad.getListaPrestiti().stream()
+                Registro<Integer, Prestito> regPrestiti = getRegistro(RegistroPrestiti.class);
+                regPrestiti.setMappa(ad.getListaPrestiti().stream()
                         .collect(Collectors.toMap(Prestito::getId, prestito -> prestito)));
 
                 directoryCorrente = cartellaSelezionata;
@@ -303,5 +318,9 @@ public class PrimaryController {
 
     }
 
+    @SuppressWarnings("unchecked")
+    private <K, T> Registro<K, T> getRegistro(Class<?> key) {
+        return (Registro<K, T>) mappaRegistri.get(key);
+    }
 
 }

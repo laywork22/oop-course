@@ -14,6 +14,14 @@ public class Prestito implements Comparable<Prestito>{
     private LocalDate dataFineEffettiva;
     private StatoPrestito stato;
 
+    public static enum StatoPrestito {
+        IN_SCADENZA,
+        ATTIVO,
+        CHIUSO_IN_RITARDO,
+        CHIUSO
+    }
+
+
     public Prestito(Utente utente, Libro libro, LocalDate dataFinePrestabilita) {
         this.id = nextId;
         this.utente = utente;

@@ -14,9 +14,9 @@ import javafx.util.StringConverter;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.presenters.FormController;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.managers.GestoreLibro;
-import librarymanager.managers.GestorePrestito;
-import librarymanager.managers.GestoreUtente;
+import librarymanager.managers.RegistroLibri;
+import librarymanager.managers.RegistroPrestiti;
+import librarymanager.managers.RegistroUtenti;
 import librarymanager.models.*;
 import librarymanager.validators.formvalidators.FormValidator;
 
@@ -24,9 +24,9 @@ import java.time.LocalDate;
 
 public class FormPrestitoController implements FormController<Prestito> {
 
-    private final GestorePrestito gestorePrestito;
-    private final GestoreUtente gestoreUtente;
-    private final GestoreLibro gestoreLibro;
+    private final RegistroPrestiti gestorePrestito;
+    private final RegistroUtenti gestoreUtente;
+    private final RegistroLibri gestoreLibro;
 
     private FormValidator formValidator;
     private DialogService ds;
@@ -47,7 +47,7 @@ public class FormPrestitoController implements FormController<Prestito> {
     @javafx.fxml.FXML
     private Button annullaBtn;
 
-    public FormPrestitoController(GestorePrestito gestorePrestito, GestoreLibro gestoreLibro, GestoreUtente gestoreUtente, DialogService ds) {
+    public FormPrestitoController(RegistroPrestiti gestorePrestito, RegistroLibri gestoreLibro, RegistroUtenti gestoreUtente, DialogService ds) {
         this.gestoreLibro = gestoreLibro;
         this.gestorePrestito = gestorePrestito;
         this.gestoreUtente = gestoreUtente;
@@ -146,10 +146,10 @@ public class FormPrestitoController implements FormController<Prestito> {
 
     private void setComboBox() {
         FilteredList<Utente> utentiFiltrati = new FilteredList<>(FXCollections.observableArrayList(gestoreUtente.getLista()),
-                 utente -> utente != null && (utente.getStato() != StatoUtente.ARCHIVIATO));
+                 utente -> utente != null && (utente.getStato() != Utente.StatoUtente.ARCHIVIATO));
 
         FilteredList<Libro> libriFiltrati = new FilteredList<>(FXCollections.observableArrayList(gestoreLibro.getLista()),
-                libro -> libro != null && libro.getStato() != StatoLibro.ARCHIVIATO);
+                libro -> libro != null && libro.getStato() != Libro.StatoLibro.ARCHIVIATO);
 
         utentiCb.setItems(utentiFiltrati);
         libroCb.setItems(libriFiltrati);

@@ -17,10 +17,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
-import librarymanager.controllers.forms.FormLibroController;
-import librarymanager.managers.GestoreLibro;
+import librarymanager.managers.RegistroLibri;
 import librarymanager.models.Libro;
-import librarymanager.models.StatoLibro;
 
 import java.io.IOException;
 import java.util.*;
@@ -29,18 +27,17 @@ import java.util.*;
  * @class LibroTableController
  * @brief Controller per la gestione della vista tabellare dei libri.
  * @details Implementa la logica di presentazione per l'area libri, gestendo la sincronizzazione
- * tra il GestoreLibro e la TableView JavaFX.
+ * tra il RegistroLibri e la TableView JavaFX.
  * * @invariant La TableView 'tabellaLibri' mostra sempre il contenuto di 'listaOrdinata'.
  * @invariant 'listaOrdinata' deve riflettere i cambiamenti di 'listaFiltrata', a sua volta legata a 'lista'.
  * @invariant 'lista' deve contenere tutti e soli i libri restituiti da gestoreLibro.getLista() dopo ogni operazione di aggiornamento.
  */
 public class LibroTableController implements AreaEditablePresenter {
 
-    private final GestoreLibro gestoreLibro;
+    private final RegistroLibri gestoreLibro;
     private final Map<String, Comparator<Libro>> mappaOrdinamento;
-    private final DialogService ds; // Ora è final e inizializzato
+    private final DialogService ds;
 
-    // Dati per la tabella
     private ObservableList<Libro> lista;
     private FilteredList<Libro> listaFiltrata;
     private SortedList<Libro> listaOrdinata;
@@ -48,17 +45,16 @@ public class LibroTableController implements AreaEditablePresenter {
     @FXML private TableView<Libro> tabellaLibri;
     @FXML private AnchorPane mainContentLibri;
 
-    // Colonne
     @FXML private TableColumn<Libro, String> isbnClm;
     @FXML private TableColumn<Libro, String> TitoloClm;
     @FXML private TableColumn<Libro, String> autoriClm;
     @FXML private TableColumn<Libro, Integer> annoClm;
     @FXML private TableColumn<Libro, Integer> copieTotaliClm;
     @FXML private TableColumn<Libro, Integer> copieDisponibiliClm;
-    @FXML private TableColumn<Libro, StatoLibro> statoClm;
+    @FXML private TableColumn<Libro, Libro.StatoLibro> statoClm;
 
 
-    public LibroTableController(GestoreLibro gestoreLibro) {
+    public LibroTableController(RegistroLibri gestoreLibro) {
         this.gestoreLibro = gestoreLibro;
         this.ds = new DialogServiceJavaFX(); // Inizializzazione necessaria!
 
@@ -72,7 +68,7 @@ public class LibroTableController implements AreaEditablePresenter {
      * @brief Inizializza il controller, le colonne della tabella e il binding dei dati.
      * @details Configura le PropertyValueFactory per le colonne, imposta la politica di ridimensionamento
      * e crea la catena di ObservableList (Base -> Filtered -> Sorted) per la gestione della vista.
-     * @post La TableView è popolata con i dati attuali del GestoreLibro.
+     * @post La TableView è popolata con i dati attuali del RegistroLibri.
      * @post Le colonne Titolo, Autori, ISBN, Anno, Copie e Stato sono correttamente legate al modello Libro.
      */
     @FXML
@@ -109,7 +105,7 @@ public class LibroTableController implements AreaEditablePresenter {
     /**
      * @brief Avvia la procedura di creazione di un nuovo libro.
      * @details Apre la finestra modale 'LibroView.fxml' in modalità di aggiunta.
-     * @post Se l'utente conferma il salvataggio nel form, il nuovo libro viene aggiunto al GestoreLibro.
+     * @post Se l'utente conferma il salvataggio nel form, il nuovo libro viene aggiunto al RegistroLibri.
      * @post La tabella viene aggiornata per mostrare il nuovo inserimento.
      */
     @Override
@@ -121,7 +117,7 @@ public class LibroTableController implements AreaEditablePresenter {
      * @brief Avvia la procedura di modifica per il libro selezionato.
      * @details Apre la finestra modale 'LibroView.fxml' popolata con i dati del libro selezionato.
      * @pre Un libro deve essere attualmente selezionato nella tabella (tabellaLibri.getSelectionModel().getSelectedItem() != null).
-     * @post Se l'utente conferma le modifiche, il libro nel GestoreLibro viene aggiornato.
+     * @post Se l'utente conferma le modifiche, il libro nel RegistroLibri viene aggiornato.
      * @post La tabella riflette immediatamente le modifiche apportate (es. Cambio titolo o copie).
      * @note Se nessun libro è selezionato, viene mostrato un avviso all'utente.
      */
@@ -197,10 +193,10 @@ public class LibroTableController implements AreaEditablePresenter {
      * @brief Rimuove (archivia) il libro selezionato.
      * @details Chiede conferma all'utente prima di procedere con la rimozione logica.
      * @pre Un libro deve essere selezionato nella tabella.
-     * @pre Il libro selezionato non deve avere copie attualmente in prestito (vincolo verificato dal GestoreLibro).
+     * @pre Il libro selezionato non deve avere copie attualmente in prestito (vincolo verificato dal RegistroLibri).
      * @post Se confermato e le pre-condizioni del Gestore sono soddisfatte, lo stato del libro diventa ARCHIVIATO.
      * @post Il libro rimosso non viene più visualizzato nella lista attiva (se il filtro lo esclude) o il suo stato visivo cambia.
-     * @throws librarymanager.exceptions.LibroException Mostra un messaggio di errore se il GestoreLibro solleva eccezioni (es. copie in prestito).
+     * @throws librarymanager.exceptions.LibroException Mostra un messaggio di errore se il RegistroLibri solleva eccezioni (es. copie in prestito).
      */
     @Override
     public void onRimuovi() {

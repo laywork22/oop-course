@@ -19,11 +19,10 @@ import javafx.stage.Stage;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.uialert.DialogServiceJavaFX;
 import librarymanager.controllers.forms.FormPrestitoController;
-import librarymanager.managers.GestoreLibro;
-import librarymanager.managers.GestorePrestito;
-import librarymanager.managers.GestoreUtente;
+import librarymanager.managers.RegistroLibri;
+import librarymanager.managers.RegistroPrestiti;
+import librarymanager.managers.RegistroUtenti;
 import librarymanager.models.Prestito;
-import librarymanager.models.StatoPrestito;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -39,9 +38,9 @@ import java.util.*;
  * @invariant Il colore della riga deve riflettere lo stato del prestito rispetto alla data odierna (Verde=Chiuso, Rosso=Scaduto, Giallo=In Scadenza).
  */
 public class PrestitoTableController implements AreaEditablePresenter {
-    private final GestorePrestito gestorePrestito;
-    private final GestoreUtente gestoreUtente;
-    private final GestoreLibro gestoreLibro;
+    private final RegistroPrestiti gestorePrestito;
+    private final RegistroUtenti gestoreUtente;
+    private final RegistroLibri gestoreLibro;
 
     private Map<String, Comparator<Prestito>> mappaOrdinamento;
 
@@ -74,11 +73,11 @@ public class PrestitoTableController implements AreaEditablePresenter {
     @javafx.fxml.FXML
     private TableColumn<Prestito, Integer> idClm;
     @javafx.fxml.FXML
-    private TableColumn<Prestito, StatoPrestito> statoClm;
+    private TableColumn<Prestito, Prestito.StatoPrestito> statoClm;
     @FXML
     private TableView<Prestito> tabellaPrestiti;
 
-    public PrestitoTableController(GestorePrestito gestorePrestito, GestoreLibro gestoreLibro, GestoreUtente gestoreUtente) {
+    public PrestitoTableController(RegistroPrestiti gestorePrestito, RegistroLibri gestoreLibro, RegistroUtenti gestoreUtente) {
         this.gestorePrestito = gestorePrestito;
         this.gestoreUtente = gestoreUtente;
         this.gestoreLibro = gestoreLibro;
@@ -138,7 +137,7 @@ public class PrestitoTableController implements AreaEditablePresenter {
                         LocalDate scadenza = prestito.getDataFinePrestabilita();
                         LocalDate scadenzaEffettiva = prestito.getDataFineEffettiva();
 
-                        if (prestito.getStato() == StatoPrestito.CHIUSO) {
+                        if (prestito.getStato() == Prestito.StatoPrestito.CHIUSO) {
                             setStyle("-fx-background-color: lightgreen;");
                         } else if (scadenza.isBefore(now)) {
                             if (scadenzaEffettiva != null) {
@@ -236,7 +235,7 @@ public class PrestitoTableController implements AreaEditablePresenter {
     /**
      * @brief Avvia la creazione di un nuovo prestito.
      * @details Apre il form iniettando tutti i gestori necessari (Libro, Utente, Prestito) per permettere la selezione.
-     * @post Se il prestito è creato con successo, viene aggiunto al GestorePrestito.
+     * @post Se il prestito è creato con successo, viene aggiunto al RegistroPrestiti.
      * @post Le disponibilità del libro e i contatori dell'utente vengono aggiornati indirettamente.
      */
     @Override
@@ -288,7 +287,7 @@ public class PrestitoTableController implements AreaEditablePresenter {
 
     /**
      * @brief Ricarica i dati dal gestore.
-     * @post La vista è allineata con i dati presenti in GestorePrestito.
+     * @post La vista è allineata con i dati presenti in RegistroPrestiti.
      */
     @Override
     public void ricarica() {
