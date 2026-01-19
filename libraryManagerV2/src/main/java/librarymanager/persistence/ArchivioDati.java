@@ -1,6 +1,9 @@
-package librarymanager.models;
+package librarymanager.persistence;
 
-import librarymanager.persistence.Archiviabile;
+import librarymanager.models.Libro;
+import librarymanager.models.Prestito;
+import librarymanager.models.Utente;
+
 import java.util.List;
 
 public class ArchivioDati implements Archiviabile {

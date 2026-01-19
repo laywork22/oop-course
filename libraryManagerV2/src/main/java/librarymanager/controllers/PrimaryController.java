@@ -15,12 +15,13 @@ import javafx.util.Duration;
 import librarymanager.alert.DialogService;
 import librarymanager.controllers.presenters.*;
 import librarymanager.managers.*;
-import librarymanager.models.ArchivioDati;
+import librarymanager.persistence.ArchivioDati;
 import librarymanager.models.Libro;
 import librarymanager.models.Prestito;
 import librarymanager.models.Utente;
 import librarymanager.persistence.Archiviabile;
 import librarymanager.persistence.ArchivioIO;
+import librarymanager.persistence.SalvataggioAutomatico;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class PrimaryController {
 
     private AreaPresenter areaCorrente;
     private DialogService ds;
-
+    private SalvataggioAutomatico sa;
     private boolean menuVisible = false;
 
     @FXML
@@ -73,6 +74,10 @@ public class PrimaryController {
     private Button areaUtentiBtn;
     @FXML
     private AnchorPane tabellaContent;
+    @FXML
+    private ProgressBar progInd;
+    @FXML
+    private Label progIndLbl;
 
     public PrimaryController() {}
 
@@ -115,6 +120,8 @@ public class PrimaryController {
         if (areaCorrente instanceof RefreshableState)
             ((RefreshableState) areaCorrente).aggiornaStati();
 
+
+
         setAreaPrestiti(null);
 
         toggleMenu(null);
@@ -124,6 +131,7 @@ public class PrimaryController {
     }
 
     @FXML
+    @SuppressWarnings("unchecked")
     public void salvaFile(ActionEvent actionEvent) {
         if (directoryCorrente != null) {
 
@@ -135,6 +143,8 @@ public class PrimaryController {
         } else {
             salvaFileConNome(actionEvent);
         }
+
+        avviaSalvataggioAutomatico();
 
         toggleMenu(actionEvent);
     }
@@ -161,6 +171,8 @@ public class PrimaryController {
 
         } catch (Exception e) {
             ds.mostraErrore( "Errore di salvataggio");
+        } finally {
+            avviaSalvataggioAutomatico();
         }
 
         toggleMenu(actionEvent);
@@ -311,6 +323,8 @@ public class PrimaryController {
             }
         } catch (Exception e) {
             ds.mostraErrore("Errore caricamento: "+ e.getMessage());
+        } finally {
+            avviaSalvataggioAutomatico();
         }
 
         areaCorrente.ricarica();
@@ -320,6 +334,23 @@ public class PrimaryController {
     @SuppressWarnings("unchecked")
     private <K, T> Registro<K, T> getRegistro(Class<?> key) {
         return (Registro<K, T>) mappaRegistri.get(key);
+    }
+
+    private void avviaSalvataggioAutomatico() {
+        if (this.sa != null && this.sa.isRunning()) {
+            this.sa.cancel();
+        }
+
+        if (directoryCorrente != null) {
+
+            this.sa = new SalvataggioAutomatico(mappaRegistri, archivioCsvIO, directoryCorrente.getPath());
+
+            progIndLbl.textProperty().bind(sa.messageProperty());
+            progInd.progressProperty().bind(sa.progressProperty());
+            progInd.visibleProperty().bind(sa.runningProperty());
+
+            this.sa.start();
+        }
     }
 
 }
